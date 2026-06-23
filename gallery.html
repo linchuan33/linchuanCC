@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Gallery | Linchuan Chen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --main-bg: #0b1120;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border: rgba(148, 163, 184, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #e2e8f0, #7dd3fc, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* 瀑布流/网格照片墙 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            padding: 15px;
+        }
+
+        .photo-info h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .photo-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .back-btn {
+                position: relative;
+                top: 0;
+                transform: none;
+            }
+            .back-btn:hover {
+                transform: translateY(-2px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                Back to Home
+            </a>
+            <h1>Moments of Solitude</h1>
+            <p>A collection of my photography</p>
+        </header>
+
+        <div class="gallery-grid">
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Nature">
+                <div class="photo-info">
+                    <h3>Mountain Hike</h3>
+                    <p>Summer 2025</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Beach">
+                <div class="photo-info">
+                    <h3>Sunset Beach</h3>
+                    <p>Spring 2025</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=600&q=80" alt="City">
+                <div class="photo-info">
+                    <h3>Urban Solitude</h3>
+                    <p>Winter 2024</p>
+                </div>
+            </div>
+            
+            </div>
+    </div>
+
+</body>
+</html>
