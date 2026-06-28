@@ -1,184 +1,547 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Photo Gallery | Linchuan Chen</title>
+    <title>Moments of Solitude | Linchuan Chen</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --main-bg: #0b1120;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent: #38bdf8;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --border: rgba(148, 163, 184, 0.1);
+            --cream:       #faf5e9;
+            --wood:        #7a5230;
+            --yonex-red:   #e8002d;
+            --victor-blue: #0055aa;
+            --text-dark:   #3a2410;
+            --text-mid:    #6b4f2e;
+            --text-light:  #9a7a50;
+            --border:      rgba(139,105,20,0.15);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--main-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding: 40px 20px;
+            background: var(--cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            cursor: url('badminton-MOUSE.png') 16 16, auto;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
+        /* ===== TOP BAR ===== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(250,245,233,0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
         }
 
         .back-btn {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--accent);
+            gap: 7px;
+            color: var(--text-mid);
             text-decoration: none;
-            font-weight: 500;
-            padding: 10px 20px;
-            background: rgba(56, 189, 248, 0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1.5px solid var(--border);
+            transition: all 0.25s;
+            flex-shrink: 0;
         }
-
         .back-btn:hover {
-            background: rgba(56, 189, 248, 0.2);
-            transform: translateY(-50%) translateX(-5px);
+            color: var(--yonex-red);
+            border-color: rgba(232,0,45,0.3);
+            transform: translateX(-4px);
         }
 
-        h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #e2e8f0, #7dd3fc, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .topbar-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            flex: 1;
+            text-align: center;
+        }
+        .topbar-count {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            flex-shrink: 0;
+            font-weight: 600;
         }
 
-        p {
-            color: var(--text-secondary);
-            margin-top: 10px;
+        /* ===== FILTERS ===== */
+        .filter-bar {
+            padding: 22px 32px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* 瀑布流/网格照片墙 */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .filter-label {
+            font-size: 0.74rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            font-weight: 700;
+            min-width: 70px;
         }
 
-        .photo-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+        .filter-btn {
+            padding: 7px 18px;
+            border-radius: 30px;
+            border: 1.5px solid var(--border);
+            background: rgba(255,255,255,0.7);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+        .filter-btn:hover { border-color: rgba(232,0,45,0.35); color: var(--yonex-red); }
+        .filter-btn.active {
+            background: var(--yonex-red);
+            color: #fff;
+            border-color: var(--yonex-red);
+        }
+        .filter-btn.active-blue {
+            background: var(--victor-blue);
+            color: #fff;
+            border-color: var(--victor-blue);
+        }
+
+        /* ===== GRID ===== */
+        .gallery-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 22px 32px 60px;
+        }
+
+        .photo-count {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .photo-grid {
+            columns: 4 280px;
+            column-gap: 16px;
+        }
+
+        .photo-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            background: rgba(255,255,255,0.5);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+            position: relative;
         }
-
-        .photo-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-color: rgba(56, 189, 248, 0.3);
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.16);
+            border-color: rgba(232,0,45,0.3);
         }
-
-        .photo-card img {
+        .photo-item img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
             display: block;
+            object-fit: cover;
             transition: transform 0.4s ease;
         }
+        .photo-item:hover img { transform: scale(1.03); }
 
-        .photo-card:hover img {
-            transform: scale(1.05);
+        .photo-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.55);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.25s;
         }
+        .photo-item:hover .photo-badge { opacity: 1; }
 
-        .photo-info {
-            padding: 15px;
-        }
-
-        .photo-info h3 {
+        .no-photos {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-light);
             font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 5px;
         }
 
-        .photo-info p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin: 0;
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(20,10,4,0.92);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.28s;
+        }
+        .lightbox.open { opacity: 1; pointer-events: all; }
+
+        .lb-img {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            transform: scale(0.95);
+            transition: transform 0.28s;
+        }
+        .lightbox.open .lb-img { transform: scale(1); }
+
+        .lb-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .lb-close:hover { background: rgba(232,0,45,0.5); }
+
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.13);
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .lb-nav:hover { background: rgba(255,255,255,0.25); }
+        .lb-prev { left: 16px; }
+        .lb-next { right: 16px; }
+
+        .lb-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.65);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
-        @media (max-width: 768px) {
-            .header {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-            .back-btn {
-                position: relative;
-                top: 0;
-                transform: none;
-            }
-            .back-btn:hover {
-                transform: translateY(-2px);
-            }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .topbar { padding: 12px 16px; }
+            .filter-bar, .gallery-wrap { padding-left: 16px; padding-right: 16px; }
+            .photo-grid { columns: 2 140px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="header">
-            <a href="index.html" class="back-btn">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                Back to Home
-            </a>
-            <h1>Moments of Solitude</h1>
-            <p>A collection of my photography</p>
-        </header>
+    <!-- Top bar -->
+    <header class="topbar">
+        <a href="index.html" class="back-btn" target="_self">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+        </a>
+        <div class="topbar-title">Moments of Solitude · 镜中瞬间</div>
+        <div class="topbar-count" id="photoCount"></div>
+    </header>
 
-        <div class="gallery-grid">
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Nature">
-                <div class="photo-info">
-                    <h3>Mountain Hike</h3>
-                    <p>Summer 2025</p>
-                </div>
-            </div>
-
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Beach">
-                <div class="photo-info">
-                    <h3>Sunset Beach</h3>
-                    <p>Spring 2025</p>
-                </div>
-            </div>
-
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=600&q=80" alt="City">
-                <div class="photo-info">
-                    <h3>Urban Solitude</h3>
-                    <p>Winter 2024</p>
-                </div>
-            </div>
-            
-            </div>
+    <!-- Filters -->
+    <div class="filter-bar">
+        <div class="filter-row">
+            <span class="filter-label">Category</span>
+            <button class="filter-btn active" onclick="filterCat('all', this)">All</button>
+            <button class="filter-btn" onclick="filterCat('CuteAnimal', this)">🐾 Cute Animals</button>
+            <button class="filter-btn" onclick="filterCat('Landscape', this)">🌄 Landscape</button>
+            <button class="filter-btn" onclick="filterCat('Portrait', this)">👤 Portrait</button>
+        </div>
+        <div class="filter-row" id="subRow" style="display:none;">
+            <span class="filter-label">Location</span>
+        </div>
     </div>
 
+    <!-- Gallery grid -->
+    <div class="gallery-wrap">
+        <div class="photo-count" id="visibleCount"></div>
+        <div class="photo-grid" id="grid"></div>
+        <div class="no-photos" id="noPhotos" style="display:none;">No photos in this category yet.</div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="lbClickBg(event)">
+        <button class="lb-close" onclick="closeLb()">✕</button>
+        <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#8249;</button>
+        <img class="lb-img" id="lbImg" src="" alt="">
+        <button class="lb-nav lb-next" onclick="lbNav(1)">&#8250;</button>
+        <div class="lb-info" id="lbInfo"></div>
+    </div>
+
+    <script>
+        /* =====================================================
+           GALLERY DATA — all real image paths from repo
+        ===================================================== */
+        const galleryData = [
+            /* ---- CuteAnimal / US_MI ---- */
+            { cat:'CuteAnimal', sub:'US_MI', loc:'Michigan, USA',
+              files:['DSC_0385.jpg','IMG_5417.JPG','IMG_5418.JPG','IMG_5419.JPG',
+                     'IMG_5448.JPG','IMG_5563.JPG','IMG_5656.JPG','IMG_5657.JPG',
+                     'IMG_5658.JPG','IMG_5659.JPG','IMG_5660.JPG','IMG_5661.JPG',
+                     'IMG_5662.JPG','IMG_5663.JPG','IMG_5664.JPG','IMG_5665.JPG',
+                     'IMG_5666.JPG','IMG_5667.JPG','IMG_5668.JPG','IMG_5669.JPG',
+                     'IMG_5670.JPG','IMG_5671.JPG','IMG_5672.JPG','IMG_5673.JPG',
+                     'IMG_5674.JPG','IMG_6239.JPG','IMG_6240.JPG','IMG_6560.JPG',
+                     'IMG_6561.JPG','IMG_6562.JPG','IMG_6563.JPG','IMG_6564.JPG',
+                     'IMG_6565.JPG','IMG_6566.JPG','IMG_6568.JPG','IMG_6569.JPG',
+                     'IMG_6830.JPG','IMG_6831.JPG','IMG_6832.JPG','IMG_6833.JPG',
+                     'IMG_6834.JPG','IMG_7820.JPG','IMG_7822.JPG','IMG_7823.JPG',
+                     'IMG_7824.JPG','IMG_7825.JPG','IMG_7826.JPG','IMG_7827.JPG',
+                     'IMG_7832.JPG','IMG_7833.JPG','IMG_7834.JPG','IMG_7835.JPG',
+                     'IMG_7836.JPG','IMG_8565.JPG','IMG_8566.JPG','IMG_8577.JPG',
+                     'IMG_8578.JPG','IMG_8581.JPG','IMG_8582.JPG','IMG_9278.JPG',
+                     'IMG_9279.JPG','IMG_9280.JPG','IMG_9282.JPG','IMG_9283.JPG',
+                     'IMG_9284.JPG','IMG_9285.JPG','Sep-6-2.jpg','Sep-6-3.jpg',
+                     'Sep-6-4.jpg','Sep-6.jpg','_DSC2034.JPG','_DSC2038.JPG',
+                     '_DSC2043.JPG','_DSC2047.JPG','_DSC2048.JPG','_DSC2213.JPG'] },
+
+            /* ---- CuteAnimal / YuanNan-云南 ---- */
+            { cat:'CuteAnimal', sub:'YuanNan-云南', loc:'Yunnan, China',
+              files:['yunnan-98.jpg','yunnan-99.jpg','yunnan-100.jpg','yunnan-101.jpg',
+                     'yunnan-102.jpg','yunnan-103.jpg','yunnan-104.jpg','yunnan-105.jpg',
+                     'yunnan-106.jpg'] },
+
+            /* ---- Landscape / HeYuan-河源 ---- */
+            { cat:'Landscape', sub:'HeYuan-河源', loc:'Heyuan, China',
+              files:['DSC_0271.jpg','DSC_0301.jpg','DSC_0380.jpg'] },
+
+            /* ---- Landscape / US_MI ---- */
+            { cat:'Landscape', sub:'US_MI', loc:'Michigan, USA',
+              files:['Doge4.jpg','Doge4-2.jpg','Doge4-3.jpg','Doge4-4.jpg',
+                     'Doge4-5.jpg','Doge4-6.jpg','Doge4-7.jpg','Doge4-8.jpg',
+                     'Doge4-9.jpg','Doge4-10.jpg','Doge4-11.jpg','Doge4-12.jpg',
+                     'Doge4-13.jpg','Doge4-14.jpg','Doge4-15.jpg','Doge4-16.jpg',
+                     'Doge4-17.jpg','Doge4-18.jpg','Doge4-19.jpg','Doge4-20.jpg',
+                     'Doge4-21.jpg','Doge4-22.jpg','Doge4-23.jpg','Doge4-24.jpg',
+                     'Doge4-25.jpg','Doge4-29.jpg','IMG_5416.JPG','IMG_5451.JPG',
+                     'IMG_6559.JPG','IMG_9281.JPG','Sep-6-7.jpg','Sep-6-8.jpg'] },
+
+            /* ---- Portrait / HeYuan-河源 ---- */
+            { cat:'Portrait', sub:'HeYuan-河源', loc:'Heyuan, China',
+              files:['07322bc636fb7c1c54422894aa37539d.JPG',
+                     '0c0e22d5ebe046a43234071e1ee397e1.JPG',
+                     '2753498bdd94337ce97ed605cf48c911.JPG',
+                     '3084d41209de8513aec7bab57e970937.JPG',
+                     '4085b42fa85ba4e13c7b7ed8a10dfe1f.JPG',
+                     '4d04237993fff7e6453ef4a2a1088609.JPG',
+                     '7361a53d43eae499db9020e3f47f90e9.JPG',
+                     '76986524fc1248881ca446f0aa8ff2c2.JPG',
+                     '82c742fe6f61ac8c0c3cb1ec8df405f8.JPG',
+                     '875a1d8f5528a180a23ede4e2e5311fb.JPG',
+                     '883b17d4d68b1574082baf045d897cd5.JPG',
+                     '8b5767289c91451eb7043e1d1d37416c.JPG',
+                     'IMG_0355.JPG','IMG_0356.JPG','IMG_0357.JPG',
+                     'IMG_0358.JPG','IMG_0359.JPG','IMG_0360.JPG','IMG_0361.JPG',
+                     'a6b679bd6f34b99c6371c0ba697c7032.JPG',
+                     'aa1a629c237ee97ac3bc2e655418f556.JPG',
+                     'd35cdd8446169ba6ab892b57fa9b4838.JPG',
+                     'tangchao-9.jpg'] },
+
+            /* ---- Portrait / US_MI ---- */
+            { cat:'Portrait', sub:'US_MI', loc:'Michigan, USA',
+              files:['IMG_5564.JPG','_DSC0568.JPG'] }
+        ];
+
+        /* =====================================================
+           Build flat image list
+        ===================================================== */
+        let allImages = [];
+        galleryData.forEach(group => {
+            group.files.forEach(f => {
+                allImages.push({
+                    cat:  group.cat,
+                    sub:  group.sub,
+                    loc:  group.loc,
+                    src:  `${group.cat}/${group.sub}/${f}`,
+                    name: f
+                });
+            });
+        });
+
+        /* =====================================================
+           State
+        ===================================================== */
+        let activeCat = 'all';
+        let activeSub = 'all';
+        let lbIndex   = 0;
+        let lbImages  = [];
+
+        /* =====================================================
+           Render
+        ===================================================== */
+        function catLabel(cat) {
+            return { CuteAnimal:'🐾 Cute Animals', Landscape:'🌄 Landscape', Portrait:'👤 Portrait' }[cat] || cat;
+        }
+        function subLabel(sub) {
+            return { 'US_MI':'Michigan, USA', 'YuanNan-云南':'Yunnan, China', 'HeYuan-河源':'Heyuan, China' }[sub] || sub;
+        }
+
+        function render() {
+            const filtered = allImages.filter(img =>
+                (activeCat === 'all' || img.cat === activeCat) &&
+                (activeSub === 'all' || img.sub === activeSub)
+            );
+
+            lbImages = filtered;
+
+            const grid = document.getElementById('grid');
+            const noP  = document.getElementById('noPhotos');
+            const vc   = document.getElementById('visibleCount');
+            const tc   = document.getElementById('photoCount');
+
+            tc.textContent = allImages.length + ' photos';
+            vc.textContent = filtered.length + ' photo' + (filtered.length !== 1 ? 's' : '');
+
+            if (!filtered.length) {
+                grid.innerHTML = '';
+                noP.style.display = '';
+                return;
+            }
+            noP.style.display = 'none';
+
+            grid.innerHTML = filtered.map((img, i) => `
+                <div class="photo-item" onclick="openLb(${i})" title="${img.loc} · ${img.name}">
+                    <img src="${img.src}" alt="${img.name}" loading="lazy"
+                         onerror="this.parentElement.style.display='none'">
+                    <div class="photo-badge">${img.loc}</div>
+                </div>
+            `).join('');
+        }
+
+        /* =====================================================
+           Category filter
+        ===================================================== */
+        function filterCat(cat, btn) {
+            activeCat = cat;
+            activeSub = 'all';
+            document.querySelectorAll('.filter-row:first-child .filter-btn')
+                .forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSubFilter(cat);
+            render();
+        }
+
+        function renderSubFilter(cat) {
+            const row = document.getElementById('subRow');
+            if (cat === 'all') { row.style.display = 'none'; return; }
+
+            const subs = [...new Set(galleryData.filter(g => g.cat === cat).map(g => g.sub))];
+            if (subs.length <= 1) { row.style.display = 'none'; return; }
+
+            row.style.display = 'flex';
+            const existing = row.querySelectorAll('.filter-btn');
+            existing.forEach(b => b.remove());
+
+            const allBtn = document.createElement('button');
+            allBtn.className = 'filter-btn active-blue';
+            allBtn.textContent = 'All Locations';
+            allBtn.onclick = () => filterSub('all', allBtn);
+            row.appendChild(allBtn);
+
+            subs.forEach(sub => {
+                const b = document.createElement('button');
+                b.className = 'filter-btn';
+                b.textContent = subLabel(sub);
+                b.onclick = () => filterSub(sub, b);
+                row.appendChild(b);
+            });
+        }
+
+        function filterSub(sub, btn) {
+            activeSub = sub;
+            document.querySelectorAll('#subRow .filter-btn')
+                .forEach(b => b.classList.remove('active-blue'));
+            btn.classList.add('active-blue');
+            render();
+        }
+
+        /* =====================================================
+           Lightbox
+        ===================================================== */
+        function openLb(i) {
+            lbIndex = i;
+            showLbImg();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLb() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function lbClickBg(e) {
+            if (e.target === document.getElementById('lightbox')) closeLb();
+        }
+        function lbNav(dir) {
+            lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+            showLbImg();
+        }
+        function showLbImg() {
+            const img  = lbImages[lbIndex];
+            const el   = document.getElementById('lbImg');
+            el.src     = img.src;
+            el.alt     = img.name;
+            document.getElementById('lbInfo').textContent =
+                `${catLabel(img.cat)} · ${subLabel(img.sub)} · ${lbIndex + 1} / ${lbImages.length}`;
+        }
+
+        /* keyboard navigation */
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            if (e.key === 'ArrowRight') lbNav(1);
+            if (e.key === 'ArrowLeft')  lbNav(-1);
+            if (e.key === 'Escape')     closeLb();
+        });
+
+        /* init */
+        render();
+    </script>
 </body>
 </html>
