@@ -112,26 +112,30 @@
         .lang-sw {
             display: flex;
             align-items: center;
-            gap: 2px;
+            gap: 4px;
             flex-shrink: 0;
         }
         .l-btn {
-            font-size: 0.64rem;
-            letter-spacing: 1.8px;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
             font-weight: 600;
-            color: var(--text-3);
+            color: var(--text-2);
             background: transparent;
-            border: 1px solid transparent;
-            padding: 5px 9px;
+            border: 1px solid var(--text-3);
+            padding: 7px 14px;
             border-radius: 2px;
             cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
             text-transform: uppercase;
             font-family: 'Inter', sans-serif;
         }
-        .l-btn:hover { color: var(--text-2); }
-        .l-btn.active { color: var(--gold); border-color: var(--rule); }
-        .l-pipe { font-size: 0.55rem; color: var(--text-3); user-select: none; padding: 0 2px; }
+        .l-btn:hover { color: var(--text); border-color: var(--text-2); }
+        .l-btn.active {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(201,169,110,0.08);
+        }
+        .l-pipe { font-size: 0.6rem; color: var(--text-3); user-select: none; padding: 0 2px; }
 
         .header-wm {
             display: flex;
@@ -790,7 +794,6 @@
             <img src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
             <div>
                 <div class="footer-sig-name">Linchuan Chen</div>
-                <div class="footer-sig-cn">年糕的编程花园</div>
             </div>
         </div>
         <div class="footer-copy" data-i18n="f.copy">© 2026 Linchuan Chen · All rights reserved</div>
@@ -829,7 +832,7 @@
                 'fc.all':'全部','fc.cute':'可爱动物','fc.land':'风景','fc.port':'人像',
                 'mod.photos':'张照片','mod.browse':'浏览相册',
                 'btn.more':'加载更多',
-                'f.copy':'© 2026 陈霖川 · 保留所有权利',
+                'f.copy':'© 2026 陈林川 · 保留所有权利',
                 'sub.all':'全部','sub.mi':'密歇根','sub.yn':'云南','sub.hy':'河源'
             }
         };
@@ -850,7 +853,7 @@
                 const k = el.dataset.i18nHtml;
                 if (TRANS[lang][k] !== undefined) el.innerHTML = TRANS[lang][k];
             });
-            document.title = lang === 'cn' ? '相册 — 陈霖川' : 'Gallery — Linchuan Chen';
+            document.title = lang === 'cn' ? '相册 — 陈林川' : 'Gallery — Linchuan Chen';
             /* update sub-filter buttons if visible */
             document.querySelectorAll('.sub-btn').forEach(b => {
                 const sub = b.dataset.sub;

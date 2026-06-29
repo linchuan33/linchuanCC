@@ -132,27 +132,31 @@
         .lang-sw {
             display: flex;
             align-items: center;
-            gap: 2px;
+            gap: 4px;
             margin-right: 18px;
             flex-shrink: 0;
         }
         .l-btn {
-            font-size: 0.64rem;
-            letter-spacing: 1.8px;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
             font-weight: 600;
-            color: var(--text-3);
+            color: var(--text-2);
             background: transparent;
-            border: 1px solid transparent;
-            padding: 5px 9px;
+            border: 1px solid var(--text-3);
+            padding: 7px 14px;
             border-radius: 2px;
             cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
             text-transform: uppercase;
             font-family: 'Inter', sans-serif;
         }
-        .l-btn:hover { color: var(--text-2); }
-        .l-btn.active { color: var(--gold); border-color: var(--rule); }
-        .l-pipe { font-size: 0.55rem; color: var(--text-3); user-select: none; padding: 0 2px; }
+        .l-btn:hover { color: var(--text); border-color: var(--text-2); }
+        .l-btn.active {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(201,169,110,0.08);
+        }
+        .l-pipe { font-size: 0.6rem; color: var(--text-3); user-select: none; padding: 0 2px; }
 
         .nav-toggle {
             width: 40px; height: 40px;
@@ -310,13 +314,27 @@
             color: var(--gold);
         }
 
-        .hero-cn {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1rem, 2.2vw, 1.5rem);
-            font-style: italic;
-            color: var(--text-2);
-            margin-bottom: 34px;
-            letter-spacing: 0.5px;
+        .hero-id {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+        .hero-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid rgba(201,169,110,0.35);
+            filter: brightness(0.88);
+            flex-shrink: 0;
+            margin-bottom: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s, filter 0.3s;
+        }
+        .hero-avatar:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 6px rgba(201,169,110,0.13);
+            filter: brightness(1);
         }
 
         .hero-desc {
@@ -1040,12 +1058,13 @@
         <div class="hero-content" id="heroContent">
             <div class="hero-eyebrow" data-i18n="h.eyebrow">Oakland University · CS · AI Track</div>
 
-            <h1 class="hero-name">
-                Linchuan<br>
-                <em>Chen</em>
-            </h1>
-
-            <p class="hero-cn">年糕的编程花园</p>
+            <div class="hero-id">
+                <img class="hero-avatar" src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
+                <h1 class="hero-name">
+                    Linchuan<br>
+                    <em>Chen</em>
+                </h1>
+            </div>
 
             <p class="hero-desc" data-i18n="h.desc">
                 A developer who believes code is a language that speaks
@@ -1355,7 +1374,6 @@
                 <img src="Linchuan-WaterMark.jpg" alt="Linchuan Chen — Official Mark">
             </div>
             <div class="footer-wm-name">Linchuan Chen</div>
-            <div class="footer-wm-cn">年糕的编程花园</div>
         </div>
 
         <div class="footer-rule"></div>
@@ -1520,7 +1538,7 @@
                 'sg.lng':'编程语言','sg.fw':'框架与平台','sg.fo':'专注领域','sg.sp':'口语能力',
                 'sl.cn':'母语','sl.en':'流利',
                 's4.tag':'04 · 关于','s4.t1':'关于','s4.t2':'我',
-                'a.p1':'我叫<strong>陈霖川</strong>（Linchuan Chen），是<strong>奥克兰大学</strong>计算机科学专业的学生，专攻人工智能方向。',
+                'a.p1':'我叫<strong>陈林川</strong>（Linchuan Chen），是<strong>奥克兰大学</strong>计算机科学专业的学生，专攻人工智能方向。',
                 'a.p2':'我选择计算机科学，是因为我喜欢代码能与万物"对话"这个理念 —— 从硬件芯片到动物，再到操作系统。学习机器学习、深度学习与神经网络，改变了我看待数据与问题的方式。',
                 'a.p3':'课余时间，我在羽毛球场和镜头之间度过 —— 摄影是我享受独处、捕捉他人忽视的瞬间的方式。',
                 'hb.bd':'🏸 羽毛球','hb.ph':'📷 摄影','hb.ai':'🤖 AI / ML',
@@ -1532,7 +1550,7 @@
                 'ct.hd':'联系我',
                 'cc.em':'邮箱','cc.gh':'GitHub','cc.dc':'Discord','cc.wc':'微信','cc.xh':'小红书','cc.ph':'摄影','cc.ph.v':'浏览摄影相册 →',
                 'f.home':'首页','f.works':'作品','f.tech':'技术','f.about':'关于','f.gallery':'相册','f.email':'邮箱',
-                'f.copy':'© 2026 陈霖川 · 保留所有权利'
+                'f.copy':'© 2026 陈林川 · 保留所有权利'
             }
         };
 
@@ -1554,7 +1572,7 @@
                 const k = el.dataset.i18nHtml;
                 if (TRANS[lang][k] !== undefined) el.innerHTML = TRANS[lang][k];
             });
-            document.title = lang === 'cn' ? '陈霖川 — 年糕的编程花园' : 'Linchuan Chen';
+            document.title = lang === 'cn' ? '陈林川' : 'Linchuan Chen';
         }
 
         /* ═══════════════════════════════════════
