@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linchuan Chen — 年糕的编程花园</title>
+    <title>Linchuan Chen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
             list-style: none;
             gap: 44px;
             margin-left: auto;
-            margin-right: 40px;
+            margin-right: 28px;
         }
         .nav-links a {
             font-size: 0.72rem;
@@ -127,6 +127,32 @@
         }
         .nav-links a:hover { color: var(--gold-l); }
         .nav-links a:hover::after { right: 0; }
+
+        /* Language Switch */
+        .lang-sw {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-right: 18px;
+            flex-shrink: 0;
+        }
+        .l-btn {
+            font-size: 0.64rem;
+            letter-spacing: 1.8px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 5px 9px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+        .l-btn:hover { color: var(--text-2); }
+        .l-btn.active { color: var(--gold); border-color: var(--rule); }
+        .l-pipe { font-size: 0.55rem; color: var(--text-3); user-select: none; padding: 0 2px; }
 
         .nav-toggle {
             width: 40px; height: 40px;
@@ -169,6 +195,28 @@
         }
         .mobile-menu a:hover { color: var(--gold); padding-left: 6px; }
 
+        .mobile-lang-sw {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 24px 0 0;
+        }
+        .m-l-btn {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 9px 18px;
+            border-radius: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: color 0.2s, border-color 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .m-l-btn.active { color: var(--gold); border-color: var(--rule); }
+
         .menu-overlay {
             position: fixed;
             inset: 0;
@@ -192,7 +240,6 @@
             overflow: hidden;
         }
 
-        /* Subtle dot grid */
         .hero::before {
             content: '';
             position: absolute;
@@ -203,7 +250,6 @@
             opacity: 0.5;
         }
 
-        /* Gold radial glow */
         .hero-glow {
             position: absolute;
             top: -10%; left: -15%;
@@ -213,7 +259,6 @@
             pointer-events: none;
         }
 
-        /* Giant ghost number */
         .hero-num-bg {
             position: absolute;
             right: -2%;
@@ -324,7 +369,6 @@
         }
         .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
 
-        /* Scroll indicator — bottom right */
         .hero-scroll {
             position: absolute;
             right: 56px;
@@ -397,7 +441,6 @@
         }
         .s-title em { font-style: italic; color: var(--gold); }
 
-        /* Faint bg section number */
         .s-num-bg {
             position: absolute;
             right: 40px;
@@ -432,7 +475,6 @@
             transition: padding-left 0.35s var(--ease);
         }
 
-        /* Full-width hover bg */
         .work-row::before {
             content: '';
             position: absolute;
@@ -557,7 +599,6 @@
             font-weight: 300;
         }
 
-        /* Right col */
         .skill-group { margin-bottom: 38px; }
         .sg-label {
             font-size: 0.64rem;
@@ -637,7 +678,7 @@
             align-items: start;
         }
 
-        .about-bio p {
+        .about-bio {
             font-size: 0.92rem;
             color: var(--text-2);
             line-height: 1.92;
@@ -693,7 +734,6 @@
         .tl-org { font-size: 0.74rem; color: var(--gold); letter-spacing: 0.5px; margin-bottom: 9px; }
         .tl-desc { font-size: 0.82rem; color: var(--text-2); line-height: 1.75; font-weight: 300; }
 
-        /* Contact col */
         .contact-head {
             font-size: 0.66rem;
             letter-spacing: 3px;
@@ -907,7 +947,7 @@
         .modal-body ul { padding-left: 18px; }
         .modal-body li { margin-bottom: 7px; }
         .m-stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-        .m-tag { font-size: 0.64px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); padding: 3px 9px; border: 1px solid var(--text-3); border-radius: 2px; font-size: 0.64rem; }
+        .m-tag { letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); padding: 3px 9px; border: 1px solid var(--text-3); border-radius: 2px; font-size: 0.64rem; }
 
         /* ─────────────────────────────────────
            SCROLL REVEAL SYSTEM
@@ -936,6 +976,7 @@
             .nav-links { display: none; }
             .nav-toggle { display: flex; }
             .tech-inner, .about-grid { grid-template-columns: 1fr; gap: 52px; }
+            .lang-sw { margin-right: 12px; }
         }
         @media (max-width: 720px) {
             .nav, .hero, .s { padding-left: 24px; padding-right: 24px; }
@@ -955,7 +996,6 @@
 </head>
 <body>
 
-    <!-- Scroll progress -->
     <div id="progress"></div>
 
     <!-- NAV -->
@@ -965,32 +1005,40 @@
             <span class="nav-logo-name">Linchuan Chen</span>
         </a>
         <ul class="nav-links">
-            <li><a href="#works"  target="_self">Works</a></li>
-            <li><a href="#tech"   target="_self">Tech</a></li>
-            <li><a href="#about"  target="_self">About</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="#works"  target="_self" data-i18n="n.works">Works</a></li>
+            <li><a href="#tech"   target="_self" data-i18n="n.tech">Tech</a></li>
+            <li><a href="#about"  target="_self" data-i18n="n.about">About</a></li>
+            <li><a href="gallery.html" data-i18n="n.gallery">Gallery</a></li>
         </ul>
+        <div class="lang-sw">
+            <button class="l-btn active" id="lEn" onclick="setLang('en')">EN</button>
+            <span class="l-pipe">·</span>
+            <button class="l-btn" id="lCn" onclick="setLang('cn')">中</button>
+        </div>
         <button class="nav-toggle" id="menuBtn" onclick="toggleMenu()">☰</button>
     </nav>
 
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
     <nav class="mobile-menu" id="mobileMenu">
-        <a href="#home"   onclick="closeMenu()" target="_self">Home</a>
-        <a href="#works"  onclick="closeMenu()" target="_self">Works</a>
-        <a href="#tech"   onclick="closeMenu()" target="_self">Tech</a>
-        <a href="#about"  onclick="closeMenu()" target="_self">About</a>
-        <a href="gallery.html" onclick="closeMenu()">Gallery</a>
+        <a href="#home"   onclick="closeMenu()" target="_self" data-i18n="n.home">Home</a>
+        <a href="#works"  onclick="closeMenu()" target="_self" data-i18n="n.works">Works</a>
+        <a href="#tech"   onclick="closeMenu()" target="_self" data-i18n="n.tech">Tech</a>
+        <a href="#about"  onclick="closeMenu()" target="_self" data-i18n="n.about">About</a>
+        <a href="gallery.html" onclick="closeMenu()" data-i18n="n.gallery">Gallery</a>
+        <div class="mobile-lang-sw">
+            <button class="m-l-btn active" data-lang="en" onclick="setLang('en');closeMenu()">EN</button>
+            <span class="l-pipe">·</span>
+            <button class="m-l-btn" data-lang="cn" onclick="setLang('cn');closeMenu()">中</button>
+        </div>
     </nav>
 
-    <!-- ══════════════════════════════════════
-         §01 HERO
-    ══════════════════════════════════════ -->
+    <!-- §01 HERO -->
     <section class="hero" id="home">
         <div class="hero-glow"></div>
         <div class="hero-num-bg" aria-hidden="true">01</div>
 
         <div class="hero-content" id="heroContent">
-            <div class="hero-eyebrow">Oakland University · CS · AI Track</div>
+            <div class="hero-eyebrow" data-i18n="h.eyebrow">Oakland University · CS · AI Track</div>
 
             <h1 class="hero-name">
                 Linchuan<br>
@@ -999,7 +1047,7 @@
 
             <p class="hero-cn">年糕的编程花园</p>
 
-            <p class="hero-desc">
+            <p class="hero-desc" data-i18n="h.desc">
                 A developer who believes code is a language that speaks
                 to everything — from hardware chips to neural networks.
                 Building software that solves real problems, cleanly.
@@ -1007,10 +1055,10 @@
 
             <div class="hero-actions">
                 <a href="#works" class="btn-gold" target="_self">
-                    View Works
+                    <span data-i18n="h.btn1">View Works</span>
                     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
                 </a>
-                <a href="gallery.html" class="btn-ghost">Photo Gallery</a>
+                <a href="gallery.html" class="btn-ghost" data-i18n="h.btn2">Photo Gallery</a>
             </div>
         </div>
 
@@ -1020,21 +1068,19 @@
         </div>
     </section>
 
-    <!-- ══════════════════════════════════════
-         §02 WORKS
-    ══════════════════════════════════════ -->
+    <!-- §02 WORKS -->
     <section class="s" id="works">
         <div class="s-num-bg" aria-hidden="true">02</div>
 
-        <div class="s-tag" data-r="fade">02 · Works</div>
-        <h2 class="s-title" data-r="up">Selected<br><em>Projects</em></h2>
+        <div class="s-tag" data-r="fade" data-i18n="s2.tag">02 · Works</div>
+        <h2 class="s-title" data-r="up"><span data-i18n="s2.t1">Selected</span><br><em><span data-i18n="s2.t2">Projects</span></em></h2>
 
         <div class="works-list" data-stg>
             <div class="work-row" onclick="openModal('travel')">
                 <div class="work-n">01</div>
                 <div class="work-body">
-                    <h3>Business Travel Expense System</h3>
-                    <p>Full enterprise reimbursement workflow — invoice upload, auto-verification, finance forwarding. Cut manual conference staffing from 20–30 to near zero. Built on Enterprise WeChat with 2FA and paperless monthly summaries.</p>
+                    <h3 data-i18n="w1.h">Business Travel Expense System</h3>
+                    <p data-i18n="w1.p">Full enterprise reimbursement workflow — invoice upload, auto-verification, finance forwarding. Cut manual conference staffing from 20–30 to near zero. Built on Enterprise WeChat with 2FA and paperless monthly summaries.</p>
                     <div class="w-tags">
                         <span class="w-tag">WeChat API</span>
                         <span class="w-tag">Backend</span>
@@ -1048,8 +1094,8 @@
             <div class="work-row" onclick="openModal('ticket')">
                 <div class="work-n">02</div>
                 <div class="work-body">
-                    <h3>WeChat Mini Program — QR Ticket Scanner</h3>
-                    <p>QR-code event ticket verification built with JavaScript and HTML5. Reduced venue entry staff from 21 to 4 through real-time seat validation and contactless digital tickets.</p>
+                    <h3 data-i18n="w2.h">WeChat Mini Program — QR Ticket Scanner</h3>
+                    <p data-i18n="w2.p">QR-code event ticket verification built with JavaScript and HTML5. Reduced venue entry staff from 21 to 4 through real-time seat validation and contactless digital tickets.</p>
                     <div class="w-tags">
                         <span class="w-tag">JavaScript</span>
                         <span class="w-tag">Mini Program</span>
@@ -1062,8 +1108,8 @@
             <div class="work-row" onclick="openModal('golf')">
                 <div class="work-n">03</div>
                 <div class="work-body">
-                    <h3>Indoor Golf System — Smart Update Mechanism</h3>
-                    <p>Rollback-safe update pipeline for a Vision AI indoor golf platform. Automatic revert to stable v1.5.7 on failure, with a non-technical user rollback interface and zero-downtime deployments.</p>
+                    <h3 data-i18n="w3.h">Indoor Golf System — Smart Update Mechanism</h3>
+                    <p data-i18n="w3.p">Rollback-safe update pipeline for a Vision AI indoor golf platform. Automatic revert to stable v1.5.7 on failure, with a non-technical user rollback interface and zero-downtime deployments.</p>
                     <div class="w-tags">
                         <span class="w-tag">System Design</span>
                         <span class="w-tag">Vision AI</span>
@@ -1076,8 +1122,8 @@
             <div class="work-row" onclick="openModal('ou')">
                 <div class="work-n">04</div>
                 <div class="work-body">
-                    <h3>OU Tech Center — IT Technician</h3>
-                    <p>Central IT support for Oakland University across 20,000+ users. Account management, domain migrations, Microsoft 365 and Banner database administration, GrizzVPN security enforcement.</p>
+                    <h3 data-i18n="w4.h">OU Tech Center — IT Technician</h3>
+                    <p data-i18n="w4.p">Central IT support for Oakland University across 20,000+ users. Account management, domain migrations, Microsoft 365 and Banner database administration, GrizzVPN security enforcement.</p>
                     <div class="w-tags">
                         <span class="w-tag">Microsoft 365</span>
                         <span class="w-tag">IT Support</span>
@@ -1089,19 +1135,16 @@
         </div>
     </section>
 
-    <!-- ══════════════════════════════════════
-         §03 TECH
-    ══════════════════════════════════════ -->
+    <!-- §03 TECH -->
     <section class="s" id="tech">
         <div class="s-num-bg" aria-hidden="true">03</div>
 
-        <div class="s-tag" data-r="fade">03 · Tech</div>
-        <h2 class="s-title" data-r="up">Skills &amp;<br><em>Expertise</em></h2>
+        <div class="s-tag" data-r="fade" data-i18n="s3.tag">03 · Tech</div>
+        <h2 class="s-title" data-r="up"><span data-i18n="s3.t1">Skills &amp;</span><br><em><span data-i18n="s3.t2">Expertise</span></em></h2>
 
         <div class="tech-inner">
-            <!-- Left -->
             <div>
-                <blockquote class="tech-quote" data-r="left">
+                <blockquote class="tech-quote" data-r="left" data-i18n="t.quote">
                     "The reason I chose Computer Science is the idea that a program
                     can talk to anything — animals, chips, operating systems.
                     Machine Learning showed me we can face massive data
@@ -1111,23 +1154,23 @@
                 <div class="stats-grid" data-r="up">
                     <div class="stat-box">
                         <div class="stat-num" data-count="2" data-suffix="+">0+</div>
-                        <div class="stat-lbl">Internships</div>
+                        <div class="stat-lbl" data-i18n="st.int">Internships</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-num" data-count="20" data-suffix="K+">0</div>
-                        <div class="stat-lbl">Users Supported</div>
+                        <div class="stat-lbl" data-i18n="st.usr">Users Supported</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-num" data-count="4">0</div>
-                        <div class="stat-lbl">Major Projects</div>
+                        <div class="stat-lbl" data-i18n="st.prj">Major Projects</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-num" data-count="2">0</div>
-                        <div class="stat-lbl">Languages Spoken</div>
+                        <div class="stat-lbl" data-i18n="st.lng">Languages Spoken</div>
                     </div>
                 </div>
 
-                <p class="tech-desc" data-r="up">
+                <p class="tech-desc" data-r="up" data-i18n-html="t.desc">
                     Studying AI/ML at Oakland University — Machine Learning, Deep Learning,
                     and Neural Networks are reshaping how I think about problem solving.
                     My professional focus sits at the intersection of
@@ -1137,10 +1180,9 @@
                 </p>
             </div>
 
-            <!-- Right -->
             <div data-r="right">
                 <div class="skill-group">
-                    <div class="sg-label">Languages</div>
+                    <div class="sg-label" data-i18n="sg.lng">Languages</div>
                     <div class="pill-row" data-stg>
                         <span class="pill">JavaScript</span>
                         <span class="pill">Python</span>
@@ -1152,7 +1194,7 @@
                 </div>
 
                 <div class="skill-group">
-                    <div class="sg-label">Frameworks &amp; Platforms</div>
+                    <div class="sg-label" data-i18n="sg.fw">Frameworks &amp; Platforms</div>
                     <div class="pill-row" data-stg>
                         <span class="pill">Flutter</span>
                         <span class="pill">Android Studio</span>
@@ -1164,7 +1206,7 @@
                 </div>
 
                 <div class="skill-group">
-                    <div class="sg-label">Focus Areas</div>
+                    <div class="sg-label" data-i18n="sg.fo">Focus Areas</div>
                     <div class="pill-row" data-stg>
                         <span class="pill">Machine Learning</span>
                         <span class="pill">Deep Learning</span>
@@ -1176,74 +1218,67 @@
                 </div>
 
                 <div class="skill-group">
-                    <div class="sg-label">Spoken Languages</div>
+                    <div class="sg-label" data-i18n="sg.sp">Spoken Languages</div>
                     <div class="lang-row">
                         <span class="lang-n">Chinese</span>
-                        <div class="lang-track">
-                            <div class="lang-fill" style="width:100%"></div>
-                        </div>
-                        <span class="lang-lvl">Native</span>
+                        <div class="lang-track"><div class="lang-fill" style="width:100%"></div></div>
+                        <span class="lang-lvl" data-i18n="sl.cn">Native</span>
                     </div>
                     <div class="lang-row">
                         <span class="lang-n">English</span>
-                        <div class="lang-track">
-                            <div class="lang-fill" style="width:88%"></div>
-                        </div>
-                        <span class="lang-lvl">Fluent</span>
+                        <div class="lang-track"><div class="lang-fill" style="width:88%"></div></div>
+                        <span class="lang-lvl" data-i18n="sl.en">Fluent</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ══════════════════════════════════════
-         §04 ABOUT
-    ══════════════════════════════════════ -->
+    <!-- §04 ABOUT -->
     <section class="s" id="about">
         <div class="s-num-bg" aria-hidden="true">04</div>
 
-        <div class="s-tag" data-r="fade">04 · About</div>
-        <h2 class="s-title" data-r="up">About<br><em>Me</em></h2>
+        <div class="s-tag" data-r="fade" data-i18n="s4.tag">04 · About</div>
+        <h2 class="s-title" data-r="up"><span data-i18n="s4.t1">About</span><br><em><span data-i18n="s4.t2">Me</span></em></h2>
 
         <div class="about-grid">
-            <!-- Left: bio + timeline -->
             <div data-r="left">
-                <p class="about-bio" style="font-size:0.92rem;color:var(--text-2);line-height:1.9;margin-bottom:18px;font-weight:300;">
+                <p class="about-bio" data-i18n-html="a.p1">
                     My name is <strong>Linchuan Chen</strong> — a Computer Science student at
                     <strong>Oakland University</strong>, specializing in the AI track.
                 </p>
-                <p class="about-bio" style="font-size:0.92rem;color:var(--text-2);line-height:1.9;margin-bottom:18px;font-weight:300;">
+                <p class="about-bio" data-i18n="a.p2">
                     I chose CS because I love the idea that code lets you "talk" to everything —
                     from hardware chips to animals to operating systems. Studying Machine Learning,
                     Deep Learning, and Neural Networks changed how I see data and problem solving.
                 </p>
-                <p class="about-bio" style="font-size:0.92rem;color:var(--text-2);line-height:1.9;font-weight:300;">
+                <p class="about-bio" data-i18n="a.p3">
                     Outside of code, I split my time between the badminton court and
                     behind a camera lens — photography is how I enjoy solitude and
                     capture moments others walk past.
                 </p>
 
                 <div class="hobby-strip" data-stg>
-                    <span class="hobby-tag">🏸 Badminton</span>
-                    <span class="hobby-tag">📷 Photography</span>
-                    <span class="hobby-tag">🤖 AI / ML</span>
+                    <span class="hobby-tag" data-i18n="hb.bd">🏸 Badminton</span>
+                    <span class="hobby-tag" data-i18n="hb.ph">📷 Photography</span>
+                    <span class="hobby-tag" data-i18n="hb.ai">🤖 AI / ML</span>
                 </div>
 
-                <div class="xp-head">Experience</div>
+                <div class="xp-head" data-i18n="xp.hd">Experience</div>
                 <div class="tl">
                     <div class="tl-item">
-                        <div class="tl-title">IT Technician · 2023–2026</div>
-                        <div class="tl-org">Oakland University Tech Center</div>
-                        <div class="tl-desc">
+                        <div class="tl-title" data-i18n="x1.ti">IT Technician · 2023–2026</div>
+                        <div class="tl-org"  data-i18n="x1.org">Oakland University Tech Center</div>
+                        <div class="tl-desc" data-i18n="x1.de">
                             IT support for 20,000+ users — account management, hardware/software
                             troubleshooting, Microsoft 365, Banner database, domain migrations,
                             and GrizzVPN security enforcement.
                         </div>
                     </div>
                     <div class="tl-item">
-                        <div class="tl-title">Software Development Intern · 2024</div>
-                        <div class="tl-org">HengtaiXin — Indoor Golf · Vision AI</div>
-                        <div class="tl-desc">
+                        <div class="tl-title" data-i18n="x2.ti">Software Development Intern · 2024</div>
+                        <div class="tl-org"  data-i18n="x2.org">HengtaiXin — Indoor Golf · Vision AI</div>
+                        <div class="tl-desc" data-i18n="x2.de">
                             Backend developer for Enterprise WeChat integration, business travel
                             expense system, QR-code ticket mini program, and indoor golf
                             software update rollback mechanism.
@@ -1252,14 +1287,13 @@
                 </div>
             </div>
 
-            <!-- Right: contact -->
             <div data-r="right">
-                <div class="contact-head">Get in Touch</div>
+                <div class="contact-head" data-i18n="ct.hd">Get in Touch</div>
                 <div class="cc-list">
                     <a href="mailto:linchuanchen@oakland.edu" class="cc-item">
                         <div class="cc-icon">✉</div>
                         <div>
-                            <div class="cc-lbl">Email</div>
+                            <div class="cc-lbl" data-i18n="cc.em">Email</div>
                             <div class="cc-val">linchuanchen@oakland.edu</div>
                         </div>
                     </a>
@@ -1269,7 +1303,7 @@
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z"/></svg>
                         </div>
                         <div>
-                            <div class="cc-lbl">GitHub</div>
+                            <div class="cc-lbl" data-i18n="cc.gh">GitHub</div>
                             <div class="cc-val">github.com/linchuan33</div>
                         </div>
                     </a>
@@ -1279,7 +1313,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 00-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 00-5.487 0 12.36 12.36 0 00-.617-1.23A.077.077 0 008.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 00-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 00.031.055 20.03 20.03 0 005.993 2.98.078.078 0 00.084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.2 13.2 0 01-1.872-.878.075.075 0 01-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 01.078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 01.079.009c.12.098.245.195.372.288a.075.075 0 01-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 00-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 00.084.028 19.963 19.963 0 006.002-2.981.076.076 0 00.032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 00-.031-.028z"/></svg>
                         </div>
                         <div>
-                            <div class="cc-lbl">Discord</div>
+                            <div class="cc-lbl" data-i18n="cc.dc">Discord</div>
                             <div class="cc-val">437435492452270080</div>
                         </div>
                     </div>
@@ -1289,15 +1323,15 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-3.656-6.348-7.596-6.348zm7.647 10.932c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-7.062-6.122zm-3.518 3.274c.535 0 .969.44.969.983a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.983.969-.983zm4.819 0c.535 0 .969.44.969.983a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.983.969-.983z"/></svg>
                         </div>
                         <div>
-                            <div class="cc-lbl">WeChat</div>
+                            <div class="cc-lbl" data-i18n="cc.wc">WeChat</div>
                             <div class="cc-val">ChuanChuan_8C2</div>
                         </div>
                     </div>
 
                     <div class="cc-item" style="cursor:default;">
-                        <div class="cc-icon" style="font-size:0.7rem;font-weight:700;color:currentColor;letter-spacing:-0.5px;">RED</div>
+                        <div class="cc-icon" style="font-size:0.7rem;font-weight:700;letter-spacing:-0.5px;">RED</div>
                         <div>
-                            <div class="cc-lbl">Xiaohongshu · 小红书</div>
+                            <div class="cc-lbl" data-i18n="cc.xh">Xiaohongshu · 小红书</div>
                             <div class="cc-val">ID: 531965595</div>
                         </div>
                     </div>
@@ -1305,8 +1339,8 @@
                     <a href="gallery.html" class="cc-item">
                         <div class="cc-icon">◻</div>
                         <div>
-                            <div class="cc-lbl">Photography</div>
-                            <div class="cc-val">Browse the photo gallery →</div>
+                            <div class="cc-lbl" data-i18n="cc.ph">Photography</div>
+                            <div class="cc-val" data-i18n="cc.ph.v">Browse the photo gallery →</div>
                         </div>
                     </a>
                 </div>
@@ -1314,9 +1348,7 @@
         </div>
     </section>
 
-    <!-- ══════════════════════════════════════
-         FOOTER + WATERMARK
-    ══════════════════════════════════════ -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-wm" data-r="up">
             <div class="footer-wm-ring">
@@ -1329,20 +1361,18 @@
         <div class="footer-rule"></div>
 
         <nav class="footer-nav">
-            <a href="#home"   target="_self">Home</a>
-            <a href="#works"  target="_self">Works</a>
-            <a href="#tech"   target="_self">Tech</a>
-            <a href="#about"  target="_self">About</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="mailto:linchuanchen@oakland.edu">Email</a>
+            <a href="#home"   target="_self" data-i18n="f.home">Home</a>
+            <a href="#works"  target="_self" data-i18n="f.works">Works</a>
+            <a href="#tech"   target="_self" data-i18n="f.tech">Tech</a>
+            <a href="#about"  target="_self" data-i18n="f.about">About</a>
+            <a href="gallery.html" data-i18n="f.gallery">Gallery</a>
+            <a href="mailto:linchuanchen@oakland.edu" data-i18n="f.email">Email</a>
         </nav>
 
-        <p class="footer-copy">© 2026 Linchuan Chen · All rights reserved</p>
+        <p class="footer-copy" data-i18n="f.copy">© 2026 Linchuan Chen · All rights reserved</p>
     </footer>
 
-    <!-- ══════════════════════════════════════
-         PORTFOLIO MODAL
-    ══════════════════════════════════════ -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="modal" onclick="closeModalBg(event)">
         <div class="modal-box">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1350,30 +1380,21 @@
         </div>
     </div>
 
-    <!-- ══════════════════════════════════════
-         JAVASCRIPT
-    ══════════════════════════════════════ -->
     <script>
         /* ── cursor ── */
         document.body.style.cursor = "url('badminton-MOUSE.png') 16 16, auto";
 
         /* ── scroll: progress + nav + hero parallax ── */
-        const progressBar   = document.getElementById('progress');
-        const nav           = document.getElementById('nav');
-        const heroContent   = document.getElementById('heroContent');
-        const heroH         = window.innerHeight;
+        const progressBar = document.getElementById('progress');
+        const nav         = document.getElementById('nav');
+        const heroContent = document.getElementById('heroContent');
+        const heroH       = window.innerHeight;
 
         window.addEventListener('scroll', () => {
             const y     = window.scrollY;
             const total = document.documentElement.scrollHeight - window.innerHeight;
-
-            /* progress bar */
             progressBar.style.width = `${(y / total) * 100}%`;
-
-            /* nav solidify */
             nav.classList.toggle('scrolled', y > 60);
-
-            /* hero parallax + fade */
             if (y < heroH * 1.4) {
                 const t = y / heroH;
                 heroContent.style.transform = `translateY(${y * 0.32}px)`;
@@ -1403,7 +1424,6 @@
         const rObs = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
-
         document.querySelectorAll('[data-r]').forEach(el => rObs.observe(el));
 
         /* ── stagger reveal ── */
@@ -1417,12 +1437,11 @@
                 }
             });
         }, { threshold: 0.08 });
-
         document.querySelectorAll('[data-stg]').forEach(el => sObs.observe(el));
 
         /* ── counter animation ── */
         function countUp(el, target, suffix) {
-            const dur = 1400;
+            const dur   = 1400;
             const start = performance.now();
             (function tick(now) {
                 const p = Math.min((now - start) / dur, 1);
@@ -1431,127 +1450,316 @@
                 if (p < 1) requestAnimationFrame(tick);
             })(start);
         }
-
         const cObs = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
-                    countUp(e.target,
-                        parseInt(e.target.dataset.count),
-                        e.target.dataset.suffix || '');
+                    countUp(e.target, parseInt(e.target.dataset.count), e.target.dataset.suffix || '');
                     cObs.unobserve(e.target);
                 }
             });
         }, { threshold: 0.6 });
-
         document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
 
-        /* ── portfolio modal ── */
+        /* ═══════════════════════════════════════
+           LANGUAGE SYSTEM
+        ═══════════════════════════════════════ */
+        const TRANS = {
+            en: {
+                'n.home':'Home','n.works':'Works','n.tech':'Tech','n.about':'About','n.gallery':'Gallery',
+                'h.eyebrow':'Oakland University · CS · AI Track',
+                'h.desc':'A developer who believes code is a language that speaks to everything — from hardware chips to neural networks. Building software that solves real problems, cleanly.',
+                'h.btn1':'View Works','h.btn2':'Photo Gallery',
+                's2.tag':'02 · Works','s2.t1':'Selected','s2.t2':'Projects',
+                'w1.h':'Business Travel Expense System',
+                'w1.p':'Full enterprise reimbursement workflow — invoice upload, auto-verification, finance forwarding. Cut manual conference staffing from 20–30 to near zero. Built on Enterprise WeChat with 2FA and paperless monthly summaries.',
+                'w2.h':'WeChat Mini Program — QR Ticket Scanner',
+                'w2.p':'QR-code event ticket verification built with JavaScript and HTML5. Reduced venue entry staff from 21 to 4 through real-time seat validation and contactless digital tickets.',
+                'w3.h':'Indoor Golf System — Smart Update Mechanism',
+                'w3.p':'Rollback-safe update pipeline for a Vision AI indoor golf platform. Automatic revert to stable v1.5.7 on failure, with a non-technical user rollback interface and zero-downtime deployments.',
+                'w4.h':'OU Tech Center — IT Technician',
+                'w4.p':'Central IT support for Oakland University across 20,000+ users. Account management, domain migrations, Microsoft 365 and Banner database administration, GrizzVPN security enforcement.',
+                's3.tag':'03 · Tech','s3.t1':'Skills &','s3.t2':'Expertise',
+                't.quote':'"The reason I chose Computer Science is the idea that a program can talk to anything — animals, chips, operating systems. Machine Learning showed me we can face massive data in ways we never imagined."',
+                'st.int':'Internships','st.usr':'Users Supported','st.prj':'Major Projects','st.lng':'Languages Spoken',
+                't.desc':'Studying AI/ML at Oakland University — Machine Learning, Deep Learning, and Neural Networks are reshaping how I think about problem solving. My professional focus sits at the intersection of <strong style="color:var(--text);font-weight:500">backend engineering</strong>, <strong style="color:var(--text);font-weight:500">system design</strong>, and <strong style="color:var(--text);font-weight:500">AI applications</strong>.',
+                'sg.lng':'Languages','sg.fw':'Frameworks & Platforms','sg.fo':'Focus Areas','sg.sp':'Spoken Languages',
+                'sl.cn':'Native','sl.en':'Fluent',
+                's4.tag':'04 · About','s4.t1':'About','s4.t2':'Me',
+                'a.p1':'My name is <strong>Linchuan Chen</strong> — a Computer Science student at <strong>Oakland University</strong>, specializing in the AI track.',
+                'a.p2':'I chose CS because I love the idea that code lets you "talk" to everything — from hardware chips to animals to operating systems. Studying Machine Learning, Deep Learning, and Neural Networks changed how I see data and problem solving.',
+                'a.p3':'Outside of code, I split my time between the badminton court and behind a camera lens — photography is how I enjoy solitude and capture moments others walk past.',
+                'hb.bd':'🏸 Badminton','hb.ph':'📷 Photography','hb.ai':'🤖 AI / ML',
+                'xp.hd':'Experience',
+                'x1.ti':'IT Technician · 2023–2026','x1.org':'Oakland University Tech Center',
+                'x1.de':'IT support for 20,000+ users — account management, hardware/software troubleshooting, Microsoft 365, Banner database, domain migrations, and GrizzVPN security enforcement.',
+                'x2.ti':'Software Development Intern · 2024','x2.org':'HengtaiXin — Indoor Golf · Vision AI',
+                'x2.de':'Backend developer for Enterprise WeChat integration, business travel expense system, QR-code ticket mini program, and indoor golf software update rollback mechanism.',
+                'ct.hd':'Get in Touch',
+                'cc.em':'Email','cc.gh':'GitHub','cc.dc':'Discord','cc.wc':'WeChat','cc.xh':'Xiaohongshu · 小红书','cc.ph':'Photography','cc.ph.v':'Browse the photo gallery →',
+                'f.home':'Home','f.works':'Works','f.tech':'Tech','f.about':'About','f.gallery':'Gallery','f.email':'Email',
+                'f.copy':'© 2026 Linchuan Chen · All rights reserved'
+            },
+            cn: {
+                'n.home':'首页','n.works':'作品','n.tech':'技术','n.about':'关于','n.gallery':'相册',
+                'h.eyebrow':'奥克兰大学 · 计算机科学 · 人工智能方向',
+                'h.desc':'相信代码是一种能与万物对话的语言 —— 从硬件芯片到神经网络。专注于构建真正解决问题的软件，干净而有力。',
+                'h.btn1':'查看作品','h.btn2':'摄影相册',
+                's2.tag':'02 · 作品','s2.t1':'精选','s2.t2':'项目',
+                'w1.h':'商务出行报销系统',
+                'w1.p':'完整企业报销工作流 —— 发票上传、自动核验、转发财务。将人工会议人员从20–30人削减至接近零。基于企业微信构建，集成2FA与无纸化月度汇总。',
+                'w2.h':'微信小程序 —— 二维码验票系统',
+                'w2.p':'基于JavaScript与HTML5开发的活动二维码验票小程序。通过实时座位验证与无接触数字票务，将入场工作人员从21人降至4人。',
+                'w3.h':'室内高尔夫系统 —— 智能更新机制',
+                'w3.p':'为视觉AI室内高尔夫平台设计的可回滚更新流水线。失败时自动回退至稳定版本v1.5.7，提供面向非技术用户的回滚界面，实现零停机部署。',
+                'w4.h':'奥克兰大学技术中心 —— IT技术员',
+                'w4.p':'为奥克兰大学2万余名用户提供核心IT支持。负责账户管理、域迁移、Microsoft 365与Banner数据库管理，以及GrizzVPN安全保障。',
+                's3.tag':'03 · 技术','s3.t1':'技能与','s3.t2':'专业领域',
+                't.quote':'"我选择计算机科学，是因为我喜欢程序能与万物"对话"这个理念 —— 动物、芯片、操作系统。机器学习让我意识到，我们可以用前所未有的方式面对海量数据。"',
+                'st.int':'实习经历','st.usr':'服务用户数','st.prj':'主要项目','st.lng':'掌握语言',
+                't.desc':'目前在奥克兰大学攻读AI/ML方向 —— 机器学习、深度学习与神经网络正在重塑我对问题解决的思考方式。我的专业重心集中在 <strong style="color:var(--text);font-weight:500">后端工程</strong>、<strong style="color:var(--text);font-weight:500">系统设计</strong> 与 <strong style="color:var(--text);font-weight:500">AI应用</strong> 的交叉领域。',
+                'sg.lng':'编程语言','sg.fw':'框架与平台','sg.fo':'专注领域','sg.sp':'口语能力',
+                'sl.cn':'母语','sl.en':'流利',
+                's4.tag':'04 · 关于','s4.t1':'关于','s4.t2':'我',
+                'a.p1':'我叫<strong>陈霖川</strong>（Linchuan Chen），是<strong>奥克兰大学</strong>计算机科学专业的学生，专攻人工智能方向。',
+                'a.p2':'我选择计算机科学，是因为我喜欢代码能与万物"对话"这个理念 —— 从硬件芯片到动物，再到操作系统。学习机器学习、深度学习与神经网络，改变了我看待数据与问题的方式。',
+                'a.p3':'课余时间，我在羽毛球场和镜头之间度过 —— 摄影是我享受独处、捕捉他人忽视的瞬间的方式。',
+                'hb.bd':'🏸 羽毛球','hb.ph':'📷 摄影','hb.ai':'🤖 AI / ML',
+                'xp.hd':'工作经历',
+                'x1.ti':'IT技术员 · 2023–2026','x1.org':'奥克兰大学技术中心',
+                'x1.de':'为2万余名用户提供IT支持 —— 账户管理、硬件/软件故障排查、Microsoft 365、Banner数据库、域迁移及GrizzVPN安全保障。',
+                'x2.ti':'软件开发实习生 · 2024','x2.org':'恒泰鑫 —— 室内高尔夫 · 视觉AI',
+                'x2.de':'企业微信集成、商务出行报销系统、二维码验票小程序及室内高尔夫软件更新回滚机制的后端开发。',
+                'ct.hd':'联系我',
+                'cc.em':'邮箱','cc.gh':'GitHub','cc.dc':'Discord','cc.wc':'微信','cc.xh':'小红书','cc.ph':'摄影','cc.ph.v':'浏览摄影相册 →',
+                'f.home':'首页','f.works':'作品','f.tech':'技术','f.about':'关于','f.gallery':'相册','f.email':'邮箱',
+                'f.copy':'© 2026 陈霖川 · 保留所有权利'
+            }
+        };
+
+        let _lang = localStorage.getItem('site-lang') || 'en';
+
+        function setLang(lang) {
+            _lang = lang;
+            localStorage.setItem('site-lang', lang);
+            document.documentElement.lang = lang === 'cn' ? 'zh' : 'en';
+            document.getElementById('lEn').classList.toggle('active', lang === 'en');
+            document.getElementById('lCn').classList.toggle('active', lang === 'cn');
+            document.querySelectorAll('.m-l-btn').forEach(b =>
+                b.classList.toggle('active', b.dataset.lang === lang));
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.dataset.i18n;
+                if (TRANS[lang][k] !== undefined) el.textContent = TRANS[lang][k];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const k = el.dataset.i18nHtml;
+                if (TRANS[lang][k] !== undefined) el.innerHTML = TRANS[lang][k];
+            });
+            document.title = lang === 'cn' ? '陈霖川 — 年糕的编程花园' : 'Linchuan Chen';
+        }
+
+        /* ═══════════════════════════════════════
+           PORTFOLIO MODAL (bilingual)
+        ═══════════════════════════════════════ */
         const projects = {
             travel: {
-                cat:   'Enterprise Software · 2024',
-                title: 'Business Travel Expense System',
-                org:   'HengtaiXin — Enterprise WeChat Integration Project',
-                body: `<p>Developed a comprehensive enterprise system that digitized the entire reimbursement workflow between traveling staff and the finance department — eliminating the scheduling conflict between travelers and finance teams.</p>
-                       <h4>Key Achievements</h4>
-                       <ul>
-                         <li>Cut manual conference staffing from 20–30 people to near zero</li>
-                         <li>Paperless record-keeping with automated monthly finance summaries</li>
-                         <li>WeChat OAuth login using employee mobile numbers as unique, traceable IDs</li>
-                         <li>Two-Factor Authentication (2FA) enforced on all financial requests</li>
-                       </ul>
-                       <h4>Contributions</h4>
-                       <ul>
-                         <li>Flight, train, and hotel booking via third-party API integration</li>
-                         <li>Authentication, booking, and payment processing backend</li>
-                         <li>Name-tag token conversion for finance-team identification</li>
-                         <li>Unique identifier system to solve WeChat phone-number binding constraints</li>
-                       </ul>
-                       <h4>Stack</h4>
-                       <div class="m-stack">
-                         <span class="m-tag">Enterprise WeChat API</span>
-                         <span class="m-tag">Backend Dev</span>
-                         <span class="m-tag">2FA Auth</span>
-                         <span class="m-tag">REST APIs</span>
-                         <span class="m-tag">Payment Integration</span>
-                       </div>`
+                cat:   { en:'Enterprise Software · 2024', cn:'企业软件 · 2024' },
+                title: { en:'Business Travel Expense System', cn:'商务出行报销系统' },
+                org:   { en:'HengtaiXin — Enterprise WeChat Integration Project', cn:'恒泰鑫 —— 企业微信集成项目' },
+                body:  {
+                    en: `<p>Developed a comprehensive enterprise system that digitized the entire reimbursement workflow between traveling staff and the finance department — eliminating the scheduling conflict between travelers and finance teams.</p>
+                         <h4>Key Achievements</h4>
+                         <ul>
+                           <li>Cut manual conference staffing from 20–30 people to near zero</li>
+                           <li>Paperless record-keeping with automated monthly finance summaries</li>
+                           <li>WeChat OAuth login using employee mobile numbers as unique, traceable IDs</li>
+                           <li>Two-Factor Authentication (2FA) enforced on all financial requests</li>
+                         </ul>
+                         <h4>Contributions</h4>
+                         <ul>
+                           <li>Flight, train, and hotel booking via third-party API integration</li>
+                           <li>Authentication, booking, and payment processing backend</li>
+                           <li>Name-tag token conversion for finance-team identification</li>
+                           <li>Unique identifier system to solve WeChat phone-number binding constraints</li>
+                         </ul>
+                         <h4>Stack</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">Enterprise WeChat API</span>
+                           <span class="m-tag">Backend Dev</span>
+                           <span class="m-tag">2FA Auth</span>
+                           <span class="m-tag">REST APIs</span>
+                           <span class="m-tag">Payment Integration</span>
+                         </div>`,
+                    cn: `<p>开发了一套完整的企业级系统，将差旅员工与财务部门之间的全报销流程数字化，消除了差旅人员与财务团队之间的时间调度冲突。</p>
+                         <h4>主要成就</h4>
+                         <ul>
+                           <li>将人工会议核验人员从20–30人削减至接近零</li>
+                           <li>实现无纸化记录管理与自动月度财务汇总</li>
+                           <li>以员工手机号为唯一可追溯ID实现企业微信OAuth登录</li>
+                           <li>所有财务申请强制执行双因素认证（2FA）</li>
+                         </ul>
+                         <h4>主要贡献</h4>
+                         <ul>
+                           <li>通过第三方API集成机票、火车票及酒店预订功能</li>
+                           <li>身份认证、预订及支付处理后端开发</li>
+                           <li>面向财务团队的工牌令牌转换机制</li>
+                           <li>解决企业微信手机号绑定限制的唯一标识系统</li>
+                         </ul>
+                         <h4>技术栈</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">企业微信API</span>
+                           <span class="m-tag">后端开发</span>
+                           <span class="m-tag">2FA认证</span>
+                           <span class="m-tag">REST APIs</span>
+                           <span class="m-tag">支付集成</span>
+                         </div>`
+                }
             },
             ticket: {
-                cat:   'Mini Program · 2024',
-                title: 'WeChat Mini Program — QR Ticket Scanner',
-                org:   'HengtaiXin — Event Ticketing System',
-                body: `<p>Built a WeChat Mini Program for real-time event ticket verification, eliminating queue bottlenecks caused by slow manual entry checks.</p>
-                       <h4>Key Achievements</h4>
-                       <ul>
-                         <li>Reduced venue ticket-checking staff from <strong style="color:var(--text)">21 to 4</strong> — an 81% reduction</li>
-                         <li>Eliminated physical tickets; attendees use QR codes on their phones</li>
-                         <li>Real-time validation of sessions, seating sections, and seat numbers</li>
-                       </ul>
-                       <h4>Contributions</h4>
-                       <ul>
-                         <li>QR code scanning against live purchase records database</li>
-                         <li>Real-time seat assignment and ticket type display</li>
-                         <li>Venue order management dashboard for event-day operations</li>
-                       </ul>
-                       <h4>Stack</h4>
-                       <div class="m-stack">
-                         <span class="m-tag">JavaScript</span>
-                         <span class="m-tag">HTML5 &amp; CSS3</span>
-                         <span class="m-tag">WeChat SDK</span>
-                         <span class="m-tag">QR Code API</span>
-                       </div>`
+                cat:   { en:'Mini Program · 2024', cn:'微信小程序 · 2024' },
+                title: { en:'WeChat Mini Program — QR Ticket Scanner', cn:'微信小程序 —— 二维码验票系统' },
+                org:   { en:'HengtaiXin — Event Ticketing System', cn:'恒泰鑫 —— 活动票务系统' },
+                body:  {
+                    en: `<p>Built a WeChat Mini Program for real-time event ticket verification, eliminating queue bottlenecks caused by slow manual entry checks.</p>
+                         <h4>Key Achievements</h4>
+                         <ul>
+                           <li>Reduced venue ticket-checking staff from <strong style="color:var(--text)">21 to 4</strong> — an 81% reduction</li>
+                           <li>Eliminated physical tickets; attendees use QR codes on their phones</li>
+                           <li>Real-time validation of sessions, seating sections, and seat numbers</li>
+                         </ul>
+                         <h4>Contributions</h4>
+                         <ul>
+                           <li>QR code scanning against live purchase records database</li>
+                           <li>Real-time seat assignment and ticket type display</li>
+                           <li>Venue order management dashboard for event-day operations</li>
+                         </ul>
+                         <h4>Stack</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">JavaScript</span>
+                           <span class="m-tag">HTML5 &amp; CSS3</span>
+                           <span class="m-tag">WeChat SDK</span>
+                           <span class="m-tag">QR Code API</span>
+                         </div>`,
+                    cn: `<p>开发了一款微信小程序，用于活动票务实时核验，消除了因人工入场核查速度慢导致的排队瓶颈。</p>
+                         <h4>主要成就</h4>
+                         <ul>
+                           <li>将入场核票工作人员从<strong style="color:var(--text)">21人减至4人</strong> —— 降幅81%</li>
+                           <li>取消实体票，观众凭手机二维码入场</li>
+                           <li>实时验证场次、座位区域及座位号</li>
+                         </ul>
+                         <h4>主要贡献</h4>
+                         <ul>
+                           <li>二维码扫描与实时购票记录数据库核验</li>
+                           <li>实时座位分配与票务类型展示</li>
+                           <li>活动当天运营的场馆订单管理看板</li>
+                         </ul>
+                         <h4>技术栈</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">JavaScript</span>
+                           <span class="m-tag">HTML5 &amp; CSS3</span>
+                           <span class="m-tag">微信SDK</span>
+                           <span class="m-tag">二维码API</span>
+                         </div>`
+                }
             },
             golf: {
-                cat:   'System Engineering · 2024',
-                title: 'Indoor Golf — Smart Update Mechanism',
-                org:   'HengtaiXin — Vision AI Indoor Golf Software',
-                body: `<p>Engineered a robust update and rollback mechanism for an indoor golf Vision AI platform — ensuring zero-downtime deployments and automatic recovery when updates fail.</p>
-                       <h4>Key Achievements</h4>
-                       <ul>
-                         <li>Auto-reverts to stable baseline (v1.5.7) on crash or interruption</li>
-                         <li>Rollback UX simple enough for non-technical venue operators</li>
-                         <li>Zero downtime during all version transitions</li>
-                       </ul>
-                       <h4>Contributions</h4>
-                       <ul>
-                         <li>Failure-triggered fallback mechanism with file-integrity verification</li>
-                         <li>Version-state management pipeline</li>
-                         <li>Full update lifecycle: release → QA → staged rollout → production</li>
-                       </ul>
-                       <h4>Stack</h4>
-                       <div class="m-stack">
-                         <span class="m-tag">System Design</span>
-                         <span class="m-tag">Version Management</span>
-                         <span class="m-tag">Vision AI Integration</span>
-                         <span class="m-tag">Backend</span>
-                       </div>`
+                cat:   { en:'System Engineering · 2024', cn:'系统工程 · 2024' },
+                title: { en:'Indoor Golf — Smart Update Mechanism', cn:'室内高尔夫 —— 智能更新机制' },
+                org:   { en:'HengtaiXin — Vision AI Indoor Golf Software', cn:'恒泰鑫 —— 视觉AI室内高尔夫软件' },
+                body:  {
+                    en: `<p>Engineered a robust update and rollback mechanism for an indoor golf Vision AI platform — ensuring zero-downtime deployments and automatic recovery when updates fail.</p>
+                         <h4>Key Achievements</h4>
+                         <ul>
+                           <li>Auto-reverts to stable baseline (v1.5.7) on crash or interruption</li>
+                           <li>Rollback UX simple enough for non-technical venue operators</li>
+                           <li>Zero downtime during all version transitions</li>
+                         </ul>
+                         <h4>Contributions</h4>
+                         <ul>
+                           <li>Failure-triggered fallback mechanism with file-integrity verification</li>
+                           <li>Version-state management pipeline</li>
+                           <li>Full update lifecycle: release → QA → staged rollout → production</li>
+                         </ul>
+                         <h4>Stack</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">System Design</span>
+                           <span class="m-tag">Version Management</span>
+                           <span class="m-tag">Vision AI Integration</span>
+                           <span class="m-tag">Backend</span>
+                         </div>`,
+                    cn: `<p>为室内高尔夫视觉AI平台设计了一套稳健的更新与回滚机制，确保零停机部署，并在更新失败时自动恢复。</p>
+                         <h4>主要成就</h4>
+                         <ul>
+                           <li>崩溃或中断时自动回退至稳定基线版本（v1.5.7）</li>
+                           <li>回滚界面简洁易用，非技术用户也能独立操作</li>
+                           <li>所有版本切换期间实现零停机</li>
+                         </ul>
+                         <h4>主要贡献</h4>
+                         <ul>
+                           <li>带文件完整性校验的故障触发回退机制</li>
+                           <li>版本状态管理流水线</li>
+                           <li>完整更新生命周期：发布 → QA → 分阶段推送 → 生产</li>
+                         </ul>
+                         <h4>技术栈</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">系统设计</span>
+                           <span class="m-tag">版本管理</span>
+                           <span class="m-tag">视觉AI集成</span>
+                           <span class="m-tag">后端开发</span>
+                         </div>`
+                }
             },
             ou: {
-                cat:   'IT Support · 2023–2026',
-                title: 'OU Tech Center — IT Technician',
-                org:   'Oakland University Technology Center',
-                body: `<p>Serving as core IT support for Oakland University — delivering timely, professional, and reliable assistance to faculty, staff, and over 20,000 enrolled students.</p>
-                       <h4>Responsibilities</h4>
-                       <ul>
-                         <li>Manage university accounts and login authenticator setups</li>
-                         <li>In-person IT consultations and remote telephone support</li>
-                         <li>Computer security, software management for faculty and staff</li>
-                         <li>Domain migrations and office network printer configurations</li>
-                         <li>Microsoft Access and Banner database administration via Microsoft 365</li>
-                         <li>Zoom IT support and GrizzVPN database security enforcement</li>
-                       </ul>
-                       <h4>Impact</h4>
-                       <ul>
-                         <li>Supporting <strong style="color:var(--text)">20,000+</strong> university users daily</li>
-                         <li>Delivering reliable, cost-effective institutional IT solutions</li>
-                       </ul>
-                       <h4>Stack</h4>
-                       <div class="m-stack">
-                         <span class="m-tag">Microsoft 365</span>
-                         <span class="m-tag">Banner DB</span>
-                         <span class="m-tag">GrizzVPN</span>
-                         <span class="m-tag">Microsoft Access</span>
-                         <span class="m-tag">Zoom Admin</span>
-                       </div>`
+                cat:   { en:'IT Support · 2023–2026', cn:'IT支持 · 2023–2026' },
+                title: { en:'OU Tech Center — IT Technician', cn:'奥克兰大学技术中心 —— IT技术员' },
+                org:   { en:'Oakland University Technology Center', cn:'奥克兰大学技术中心' },
+                body:  {
+                    en: `<p>Serving as core IT support for Oakland University — delivering timely, professional, and reliable assistance to faculty, staff, and over 20,000 enrolled students.</p>
+                         <h4>Responsibilities</h4>
+                         <ul>
+                           <li>Manage university accounts and login authenticator setups</li>
+                           <li>In-person IT consultations and remote telephone support</li>
+                           <li>Computer security and software management for faculty and staff</li>
+                           <li>Domain migrations and office network printer configurations</li>
+                           <li>Microsoft Access and Banner database administration via Microsoft 365</li>
+                           <li>Zoom IT support and GrizzVPN database security enforcement</li>
+                         </ul>
+                         <h4>Impact</h4>
+                         <ul>
+                           <li>Supporting <strong style="color:var(--text)">20,000+</strong> university users daily</li>
+                           <li>Delivering reliable, cost-effective institutional IT solutions</li>
+                         </ul>
+                         <h4>Stack</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">Microsoft 365</span>
+                           <span class="m-tag">Banner DB</span>
+                           <span class="m-tag">GrizzVPN</span>
+                           <span class="m-tag">Microsoft Access</span>
+                           <span class="m-tag">Zoom Admin</span>
+                         </div>`,
+                    cn: `<p>作为奥克兰大学核心IT支持人员，为教职人员、行政人员及2万余名在校生提供及时、专业、可靠的技术支持。</p>
+                         <h4>职责</h4>
+                         <ul>
+                           <li>管理大学账户与登录验证器设置</li>
+                           <li>线下IT咨询及远程电话技术支持</li>
+                           <li>为教职人员提供计算机安全与软件管理服务</li>
+                           <li>域迁移与办公网络打印机配置</li>
+                           <li>通过Microsoft 365管理Microsoft Access与Banner数据库</li>
+                           <li>Zoom IT支持与GrizzVPN数据库安全管理</li>
+                         </ul>
+                         <h4>影响</h4>
+                         <ul>
+                           <li>每日为<strong style="color:var(--text)">2万余名</strong>大学用户提供支持</li>
+                           <li>提供可靠、高性价比的机构IT解决方案</li>
+                         </ul>
+                         <h4>技术栈</h4>
+                         <div class="m-stack">
+                           <span class="m-tag">Microsoft 365</span>
+                           <span class="m-tag">Banner数据库</span>
+                           <span class="m-tag">GrizzVPN</span>
+                           <span class="m-tag">Microsoft Access</span>
+                           <span class="m-tag">Zoom管理</span>
+                         </div>`
+                }
             }
         };
 
@@ -1559,11 +1767,11 @@
             const d = projects[id];
             if (!d) return;
             document.getElementById('modalContent').innerHTML = `
-                <div class="modal-cat">${d.cat}</div>
-                <div class="modal-title">${d.title}</div>
-                <div class="modal-org">${d.org}</div>
+                <div class="modal-cat">${d.cat[_lang]}</div>
+                <div class="modal-title">${d.title[_lang]}</div>
+                <div class="modal-org">${d.org[_lang]}</div>
                 <div class="modal-hr"></div>
-                <div class="modal-body">${d.body}</div>`;
+                <div class="modal-body">${d.body[_lang]}</div>`;
             document.getElementById('modal').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
@@ -1575,6 +1783,9 @@
             if (e.target === document.getElementById('modal')) closeModal();
         }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        /* ── init language on load ── */
+        setLang(_lang);
     </script>
 </body>
 </html>

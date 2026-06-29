@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* ─────────────────────────────────────
-           TOKENS (mirror index.html)
+           TOKENS
         ───────────────────────────────────── */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -67,7 +67,7 @@
             align-items: center;
             padding: 0 52px;
             height: 68px;
-            gap: 24px;
+            gap: 20px;
         }
 
         .back-btn {
@@ -107,6 +107,31 @@
             font-style: italic;
             color: var(--gold);
         }
+
+        /* Language Switch */
+        .lang-sw {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .l-btn {
+            font-size: 0.64rem;
+            letter-spacing: 1.8px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 5px 9px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+        .l-btn:hover { color: var(--text-2); }
+        .l-btn.active { color: var(--gold); border-color: var(--rule); }
+        .l-pipe { font-size: 0.55rem; color: var(--text-3); user-select: none; padding: 0 2px; }
 
         .header-wm {
             display: flex;
@@ -180,18 +205,155 @@
         }
 
         /* ─────────────────────────────────────
-           GALLERY BODY
+           OVERVIEW — CATEGORY MODULES
         ───────────────────────────────────── */
-        .gallery-body {
-            padding: 48px 52px 80px;
+        #overview {
+            min-height: calc(100vh - 120px);
         }
 
-        /* Stats row */
-        .gallery-meta {
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(201,169,110,0.08);
+        }
+
+        .cat-module {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            aspect-ratio: 3 / 4;
+            background: var(--bg-3);
+        }
+
+        /* Slideshow images */
+        .mod-slides {
+            position: absolute;
+            inset: 0;
+        }
+        .mod-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.4s ease-in-out;
+            transform: scale(1);
+        }
+        .mod-slide.active {
+            opacity: 1;
+        }
+        .cat-module:hover .mod-slide.active {
+            animation: slowZoom 8s ease forwards;
+        }
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to   { transform: scale(1.06); }
+        }
+
+        /* Bottom gradient overlay */
+        .mod-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.82) 0%,
+                rgba(0,0,0,0.28) 42%,
+                rgba(0,0,0,0.06) 65%,
+                transparent 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 36px 32px;
+            transition: background 0.45s;
+        }
+        .cat-module:hover .mod-overlay {
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.90) 0%,
+                rgba(0,0,0,0.36) 46%,
+                rgba(0,0,0,0.08) 68%,
+                transparent 100%
+            );
+        }
+
+        /* Gold accent line on hover */
+        .mod-overlay::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-l), var(--gold), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.55s var(--ease);
+        }
+        .cat-module:hover .mod-overlay::before { transform: scaleX(1); }
+
+        .mod-seq {
+            font-size: 0.64rem;
+            letter-spacing: 3px;
+            color: rgba(201,169,110,0.55);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+        .mod-en {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 2.4vw, 2.5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.05;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+        .mod-cn {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: rgba(255,255,255,0.48);
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+        .mod-meta {
+            font-size: 0.62rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.32);
+            margin-bottom: 22px;
+        }
+        .mod-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            width: fit-content;
+            transition: gap 0.3s var(--ease), color 0.25s;
+        }
+        .cat-module:hover .mod-cta {
+            gap: 18px;
+            color: var(--gold-l);
+        }
+        .mod-cta-arr { font-size: 0.9rem; }
+
+        /* ─────────────────────────────────────
+           DETAIL VIEW
+        ───────────────────────────────────── */
+        #detail {
+            padding: 44px 52px 80px;
+            display: none;
+        }
+
+        .detail-meta {
             display: flex;
             align-items: baseline;
-            gap: 24px;
-            margin-bottom: 36px;
+            gap: 16px;
+            margin-bottom: 32px;
         }
         .meta-count {
             font-family: 'Playfair Display', serif;
@@ -206,7 +368,7 @@
             color: var(--text-3);
         }
 
-        /* Masonry grid */
+        /* Masonry photo grid */
         .photo-grid {
             columns: 3 260px;
             column-gap: 14px;
@@ -234,7 +396,6 @@
             filter: brightness(1.0);
         }
 
-        /* Hover overlay */
         .photo-overlay {
             position: absolute;
             inset: 0;
@@ -255,7 +416,6 @@
             font-weight: 500;
         }
 
-        /* Watermark stamp on each photo */
         .photo-wm {
             position: absolute;
             bottom: 10px;
@@ -271,7 +431,6 @@
         }
         .photo-card:hover .photo-wm { opacity: 0.5; }
 
-        /* Gold border on hover */
         .photo-card::after {
             content: '';
             position: absolute;
@@ -282,6 +441,30 @@
             pointer-events: none;
         }
         .photo-card:hover::after { border-color: rgba(201,169,110,0.45); }
+
+        /* Load more */
+        .load-more-wrap {
+            text-align: center;
+            padding: 48px 0 20px;
+        }
+        .load-more-btn {
+            font-size: 0.68rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-2);
+            background: transparent;
+            border: 1px solid var(--text-3);
+            padding: 14px 44px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: color 0.25s, border-color 0.25s, box-shadow 0.25s;
+            font-family: 'Inter', sans-serif;
+        }
+        .load-more-btn:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 24px rgba(201,169,110,0.12);
+        }
 
         .no-results {
             text-align: center;
@@ -330,7 +513,6 @@
         }
         .lightbox.open #lbImg { transform: scale(1); }
 
-        /* Watermark in lightbox corner */
         .lb-wm {
             position: absolute;
             bottom: 14px;
@@ -404,7 +586,7 @@
         }
 
         /* ─────────────────────────────────────
-           FOOTER (minimal, mirrors main site)
+           FOOTER
         ───────────────────────────────────── */
         .footer {
             background: var(--bg);
@@ -452,8 +634,12 @@
         /* ─────────────────────────────────────
            RESPONSIVE
         ───────────────────────────────────── */
+        @media (max-width: 900px) {
+            .modules-grid { grid-template-columns: 1fr; }
+            .cat-module { aspect-ratio: 16 / 9; }
+        }
         @media (max-width: 700px) {
-            .header-top, .filter-bar, .gallery-body { padding-left: 20px; padding-right: 20px; }
+            .header-top, .filter-bar, #detail { padding-left: 20px; padding-right: 20px; }
             .photo-grid { columns: 2 140px; }
             .header-wm-name { display: none; }
             .footer { padding: 36px 20px; }
@@ -474,10 +660,16 @@
         <div class="header-top">
             <a href="index.html" class="back-btn">
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                Back
+                <span data-i18n="hdr.back">Back</span>
             </a>
             <div class="header-divider"></div>
-            <div class="header-title">Moments of <em>Solitude</em></div>
+            <div class="header-title" data-i18n-html="hdr.title">Moments of <em>Solitude</em></div>
+            <div class="lang-sw">
+                <button class="l-btn active" id="lEn" onclick="setLang('en')">EN</button>
+                <span class="l-pipe">·</span>
+                <button class="l-btn" id="lCn" onclick="setLang('cn')">中</button>
+            </div>
+            <div class="header-divider"></div>
             <div class="header-wm">
                 <img src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
                 <span class="header-wm-name">Linchuan Chen</span>
@@ -485,27 +677,93 @@
         </div>
 
         <div class="filter-bar" id="filterBar">
-            <span class="filter-sep">Category</span>
-            <button class="f-btn active" onclick="filterCat('all',this)">All</button>
-            <button class="f-btn" onclick="filterCat('CuteAnimal',this)">Cute Animals</button>
-            <button class="f-btn" onclick="filterCat('Landscape',this)">Landscape</button>
-            <button class="f-btn" onclick="filterCat('Portrait',this)">Portrait</button>
+            <span class="filter-sep" data-i18n="fb.sep">Category</span>
+            <button class="f-btn active" data-cat="all"        onclick="filterCat('all',this)"        data-i18n="fc.all">All</button>
+            <button class="f-btn"        data-cat="CuteAnimal" onclick="filterCat('CuteAnimal',this)" data-i18n="fc.cute">Cute Animals</button>
+            <button class="f-btn"        data-cat="Landscape"  onclick="filterCat('Landscape',this)"  data-i18n="fc.land">Landscape</button>
+            <button class="f-btn"        data-cat="Portrait"   onclick="filterCat('Portrait',this)"   data-i18n="fc.port">Portrait</button>
             <div class="filter-divider" id="subDivider" style="display:none;"></div>
-            <!-- sub-filters injected by JS -->
         </div>
     </header>
 
     <!-- ══════════════════════════════════════
-         GALLERY
+         OVERVIEW — THREE CATEGORY MODULES
     ══════════════════════════════════════ -->
-    <main class="gallery-body">
-        <div class="gallery-meta">
+    <div id="overview">
+        <div class="modules-grid">
+
+            <!-- CuteAnimal Module -->
+            <div class="cat-module" onclick="filterCat('CuteAnimal')">
+                <div class="mod-slides">
+                    <img class="mod-slide active" src="CuteAnimal/US_MI/IMG_5417.JPG"       alt="" loading="eager" onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="CuteAnimal/US_MI/IMG_6830.JPG"       alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="CuteAnimal/US_MI/IMG_7820.JPG"       alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="CuteAnimal/US_MI/IMG_9278.JPG"       alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="CuteAnimal/YuanNan-云南/yunnan-100.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="CuteAnimal/US_MI/_DSC2034.JPG"      alt="" loading="lazy"  onerror="this.style.display='none'">
+                </div>
+                <div class="mod-overlay">
+                    <div class="mod-seq">01 · Photography</div>
+                    <div class="mod-en">Cute Animals</div>
+                    <div class="mod-cn">可爱动物</div>
+                    <div class="mod-meta">85 <span data-i18n="mod.photos">photographs</span> · Michigan &amp; Yunnan</div>
+                    <div class="mod-cta"><span data-i18n="mod.browse">Browse Collection</span> <span class="mod-cta-arr">→</span></div>
+                </div>
+            </div>
+
+            <!-- Landscape Module -->
+            <div class="cat-module" onclick="filterCat('Landscape')">
+                <div class="mod-slides">
+                    <img class="mod-slide active" src="Landscape/US_MI/Doge4.jpg"           alt="" loading="eager" onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Landscape/HeYuan-河源/DSC_0271.jpg"  alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Landscape/US_MI/Doge4-10.jpg"        alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Landscape/US_MI/Sep-6-7.jpg"         alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Landscape/US_MI/IMG_5416.JPG"        alt="" loading="lazy"  onerror="this.style.display='none'">
+                </div>
+                <div class="mod-overlay">
+                    <div class="mod-seq">02 · Photography</div>
+                    <div class="mod-en">Landscape</div>
+                    <div class="mod-cn">风景摄影</div>
+                    <div class="mod-meta">35 <span data-i18n="mod.photos">photographs</span> · Michigan &amp; Heyuan</div>
+                    <div class="mod-cta"><span data-i18n="mod.browse">Browse Collection</span> <span class="mod-cta-arr">→</span></div>
+                </div>
+            </div>
+
+            <!-- Portrait Module -->
+            <div class="cat-module" onclick="filterCat('Portrait')">
+                <div class="mod-slides">
+                    <img class="mod-slide active" src="Portrait/HeYuan-河源/IMG_0355.JPG"   alt="" loading="eager" onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Portrait/HeYuan-河源/tangchao-9.jpg" alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Portrait/HeYuan-河源/IMG_0356.JPG"   alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Portrait/US_MI/IMG_5564.JPG"         alt="" loading="lazy"  onerror="this.style.display='none'">
+                    <img class="mod-slide"        src="Portrait/HeYuan-河源/IMG_0357.JPG"   alt="" loading="lazy"  onerror="this.style.display='none'">
+                </div>
+                <div class="mod-overlay">
+                    <div class="mod-seq">03 · Photography</div>
+                    <div class="mod-en">Portrait</div>
+                    <div class="mod-cn">人像摄影</div>
+                    <div class="mod-meta">24 <span data-i18n="mod.photos">photographs</span> · Michigan &amp; Heyuan</div>
+                    <div class="mod-cta"><span data-i18n="mod.browse">Browse Collection</span> <span class="mod-cta-arr">→</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         DETAIL VIEW
+    ══════════════════════════════════════ -->
+    <div id="detail">
+        <div class="detail-meta">
             <span class="meta-count" id="metaCount">—</span>
             <span class="meta-label" id="metaLabel">photographs</span>
         </div>
         <div class="photo-grid" id="grid"></div>
         <div class="no-results" id="noResults" style="display:none;">No photographs in this selection.</div>
-    </main>
+        <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadPage()" data-i18n="btn.more">Load More</button>
+        </div>
+    </div>
 
     <!-- ══════════════════════════════════════
          LIGHTBOX
@@ -530,16 +788,16 @@
     <footer class="footer">
         <div class="footer-sig">
             <img src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
-            <div class="footer-sig-text">
+            <div>
                 <div class="footer-sig-name">Linchuan Chen</div>
                 <div class="footer-sig-cn">年糕的编程花园</div>
             </div>
         </div>
-        <div class="footer-copy">© 2026 Linchuan Chen · All rights reserved</div>
+        <div class="footer-copy" data-i18n="f.copy">© 2026 Linchuan Chen · All rights reserved</div>
     </footer>
 
     <!-- ══════════════════════════════════════
-         DATA + LOGIC
+         SCRIPT
     ══════════════════════════════════════ -->
     <script>
         document.body.style.cursor = "url('badminton-MOUSE.png') 16 16, auto";
@@ -550,9 +808,67 @@
             document.getElementById('progress').style.width = `${(window.scrollY / t) * 100}%`;
         }, { passive: true });
 
-        /* ══════════════════════════════════════
+        /* ═══════════════════════════════════════
+           LANGUAGE SYSTEM
+        ═══════════════════════════════════════ */
+        const TRANS = {
+            en: {
+                'hdr.back':'Back',
+                'hdr.title':'Moments of <em>Solitude</em>',
+                'fb.sep':'Category',
+                'fc.all':'All','fc.cute':'Cute Animals','fc.land':'Landscape','fc.port':'Portrait',
+                'mod.photos':'photographs','mod.browse':'Browse Collection',
+                'btn.more':'Load More',
+                'f.copy':'© 2026 Linchuan Chen · All rights reserved',
+                'sub.all':'All','sub.mi':'Michigan','sub.yn':'Yunnan','sub.hy':'Heyuan'
+            },
+            cn: {
+                'hdr.back':'返回',
+                'hdr.title':'独处的<em>瞬间</em>',
+                'fb.sep':'类别',
+                'fc.all':'全部','fc.cute':'可爱动物','fc.land':'风景','fc.port':'人像',
+                'mod.photos':'张照片','mod.browse':'浏览相册',
+                'btn.more':'加载更多',
+                'f.copy':'© 2026 陈霖川 · 保留所有权利',
+                'sub.all':'全部','sub.mi':'密歇根','sub.yn':'云南','sub.hy':'河源'
+            }
+        };
+
+        let _lang = localStorage.getItem('site-lang') || 'en';
+
+        function setLang(lang) {
+            _lang = lang;
+            localStorage.setItem('site-lang', lang);
+            document.documentElement.lang = lang === 'cn' ? 'zh' : 'en';
+            document.getElementById('lEn').classList.toggle('active', lang === 'en');
+            document.getElementById('lCn').classList.toggle('active', lang === 'cn');
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.dataset.i18n;
+                if (TRANS[lang][k] !== undefined) el.textContent = TRANS[lang][k];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const k = el.dataset.i18nHtml;
+                if (TRANS[lang][k] !== undefined) el.innerHTML = TRANS[lang][k];
+            });
+            document.title = lang === 'cn' ? '相册 — 陈霖川' : 'Gallery — Linchuan Chen';
+            /* update sub-filter buttons if visible */
+            document.querySelectorAll('.sub-btn').forEach(b => {
+                const sub = b.dataset.sub;
+                const keyMap = { all:'sub.all', US_MI:'sub.mi', 'YuanNan-云南':'sub.yn', 'HeYuan-河源':'sub.hy' };
+                const key = keyMap[sub];
+                if (key && TRANS[lang][key]) b.textContent = TRANS[lang][key];
+            });
+            /* update meta label */
+            if (document.getElementById('detail').style.display !== 'none') {
+                const n = parseInt(document.getElementById('metaCount').textContent) || 0;
+                document.getElementById('metaLabel').textContent =
+                    lang === 'cn' ? '张照片' : `photograph${n !== 1 ? 's' : ''}`;
+            }
+        }
+
+        /* ═══════════════════════════════════════
            GALLERY DATA
-        ══════════════════════════════════════ */
+        ═══════════════════════════════════════ */
         const DATA = [
             { cat:'CuteAnimal', sub:'US_MI',        loc:'Michigan, USA',  files:['DSC_0385.jpg','IMG_5417.JPG','IMG_5418.JPG','IMG_5419.JPG','IMG_5448.JPG','IMG_5563.JPG','IMG_5656.JPG','IMG_5657.JPG','IMG_5658.JPG','IMG_5659.JPG','IMG_5660.JPG','IMG_5661.JPG','IMG_5662.JPG','IMG_5663.JPG','IMG_5664.JPG','IMG_5665.JPG','IMG_5666.JPG','IMG_5667.JPG','IMG_5668.JPG','IMG_5669.JPG','IMG_5670.JPG','IMG_5671.JPG','IMG_5672.JPG','IMG_5673.JPG','IMG_5674.JPG','IMG_6239.JPG','IMG_6240.JPG','IMG_6560.JPG','IMG_6561.JPG','IMG_6562.JPG','IMG_6563.JPG','IMG_6564.JPG','IMG_6565.JPG','IMG_6566.JPG','IMG_6568.JPG','IMG_6569.JPG','IMG_6830.JPG','IMG_6831.JPG','IMG_6832.JPG','IMG_6833.JPG','IMG_6834.JPG','IMG_7820.JPG','IMG_7822.JPG','IMG_7823.JPG','IMG_7824.JPG','IMG_7825.JPG','IMG_7826.JPG','IMG_7827.JPG','IMG_7832.JPG','IMG_7833.JPG','IMG_7834.JPG','IMG_7835.JPG','IMG_7836.JPG','IMG_8565.JPG','IMG_8566.JPG','IMG_8577.JPG','IMG_8578.JPG','IMG_8581.JPG','IMG_8582.JPG','IMG_9278.JPG','IMG_9279.JPG','IMG_9280.JPG','IMG_9282.JPG','IMG_9283.JPG','IMG_9284.JPG','IMG_9285.JPG','Sep-6-2.jpg','Sep-6-3.jpg','Sep-6-4.jpg','Sep-6.jpg','_DSC2034.JPG','_DSC2038.JPG','_DSC2043.JPG','_DSC2047.JPG','_DSC2048.JPG','_DSC2213.JPG'] },
             { cat:'CuteAnimal', sub:'YuanNan-云南', loc:'Yunnan, China',   files:['yunnan-98.jpg','yunnan-99.jpg','yunnan-100.jpg','yunnan-101.jpg','yunnan-102.jpg','yunnan-103.jpg','yunnan-104.jpg','yunnan-105.jpg','yunnan-106.jpg'] },
@@ -562,104 +878,145 @@
             { cat:'Portrait',   sub:'US_MI',        loc:'Michigan, USA',   files:['IMG_5564.JPG','_DSC0568.JPG'] }
         ];
 
-        /* build flat list */
         const ALL = [];
         DATA.forEach(g => g.files.forEach(f => ALL.push({
             cat: g.cat, sub: g.sub, loc: g.loc,
-            src: `${g.cat}/${g.sub}/${f}`,
-            file: f
+            src: `${g.cat}/${g.sub}/${f}`, file: f
         })));
 
-        const CAT_LABEL = { CuteAnimal:'Cute Animals', Landscape:'Landscape', Portrait:'Portrait' };
-        const SUB_LABEL = { 'US_MI':'Michigan', 'YuanNan-云南':'Yunnan', 'HeYuan-河源':'Heyuan' };
+        const CAT_LABEL    = { CuteAnimal:'Cute Animals', Landscape:'Landscape', Portrait:'Portrait' };
+        const CAT_LABEL_CN = { CuteAnimal:'可爱动物', Landscape:'风景', Portrait:'人像' };
+        const SUB_LABEL    = { 'US_MI':'Michigan', 'YuanNan-云南':'Yunnan', 'HeYuan-河源':'Heyuan' };
+        const SUB_LABEL_CN = { 'US_MI':'密歇根', 'YuanNan-云南':'云南', 'HeYuan-河源':'河源' };
 
         /* ── state ── */
-        let activeCat = 'all';
-        let activeSub = 'all';
-        let lbIdx     = 0;
-        let lbList    = [];
+        let activeCat  = 'all';
+        let activeSub  = 'all';
+        let lbIdx      = 0;
+        let lbList     = [];
+        let detailImgs = [];
+        let pageOffset = 0;
+        const PAGE_SIZE = 24;
 
-        /* ── render ── */
-        function render() {
-            const filtered = ALL.filter(img =>
-                (activeCat === 'all' || img.cat === activeCat) &&
-                (activeSub === 'all' || img.sub === activeSub)
-            );
-            lbList = filtered;
-
-            const grid  = document.getElementById('grid');
-            const none  = document.getElementById('noResults');
-            const count = document.getElementById('metaCount');
-            const label = document.getElementById('metaLabel');
-
-            count.textContent = filtered.length;
-            label.textContent = 'photograph' + (filtered.length !== 1 ? 's' : '');
-
-            if (!filtered.length) {
-                grid.innerHTML = '';
-                none.style.display = '';
-                return;
-            }
-            none.style.display = 'none';
-
-            grid.innerHTML = filtered.map((img, i) =>
-                `<div class="photo-card" onclick="openLb(${i})">
-                    <img src="${img.src}" alt="${img.file}" loading="lazy"
-                         onerror="this.closest('.photo-card').style.display='none'">
-                    <div class="photo-overlay">
-                        <div class="photo-loc">${img.loc}</div>
-                    </div>
-                    <div class="photo-wm"></div>
-                </div>`
-            ).join('');
-        }
-
-        /* ── category filter ── */
-        function filterCat(cat, btn) {
+        /* ═══════════════════════════════════════
+           FILTER / NAVIGATION
+        ═══════════════════════════════════════ */
+        function filterCat(cat, btnEl) {
             activeCat = cat;
             activeSub = 'all';
 
-            document.querySelectorAll('#filterBar .f-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            /* activate the right filter tab */
+            if (!btnEl) {
+                btnEl = document.querySelector(`[data-cat="${cat}"]`);
+            }
+            document.querySelectorAll('#filterBar .f-btn:not(.sub-btn)').forEach(b =>
+                b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
 
-            /* rebuild sub-filters */
-            const divider = document.getElementById('subDivider');
+            /* remove old sub-buttons */
             document.querySelectorAll('.sub-btn').forEach(b => b.remove());
+            const divider = document.getElementById('subDivider');
+            divider.style.display = 'none';
 
-            if (cat !== 'all') {
-                const subs = [...new Set(DATA.filter(g => g.cat === cat).map(g => g.sub))];
-                if (subs.length > 1) {
-                    divider.style.display = '';
-                    const allSub = mkSubBtn('All', 'all', true);
-                    divider.after(allSub);
-                    subs.forEach((s, i) => {
-                        const b = mkSubBtn(SUB_LABEL[s] || s, s, false);
-                        allSub.after(b);
-                    });
-                } else {
-                    divider.style.display = 'none';
-                }
-            } else {
-                divider.style.display = 'none';
+            if (cat === 'all') {
+                document.getElementById('overview').style.display = '';
+                document.getElementById('detail').style.display   = 'none';
+                return;
             }
 
-            render();
+            /* show detail */
+            document.getElementById('overview').style.display = 'none';
+            document.getElementById('detail').style.display   = '';
+
+            /* build sub-filters if multiple subs */
+            const catGroups = DATA.filter(g => g.cat === cat);
+            const subs      = [...new Set(catGroups.map(g => g.sub))];
+
+            if (subs.length > 1) {
+                divider.style.display = '';
+                const allLbl = _lang === 'cn'
+                    ? (TRANS.cn['sub.all'] || 'All')
+                    : (TRANS.en['sub.all'] || 'All');
+                const allBtn = mkSubBtn(allLbl, 'all', true);
+                divider.after(allBtn);
+                let lastBtn = allBtn;
+                subs.forEach(s => {
+                    const lbl = _lang === 'cn'
+                        ? (SUB_LABEL_CN[s] || s)
+                        : (SUB_LABEL[s] || s);
+                    const b = mkSubBtn(lbl, s, false);
+                    lastBtn.after(b);
+                    lastBtn = b;
+                });
+            }
+
+            renderDetail();
         }
 
         function mkSubBtn(label, sub, isActive) {
             const b = document.createElement('button');
-            b.className = 'f-btn sub-btn' + (isActive ? ' active' : '');
+            b.className  = 'f-btn sub-btn' + (isActive ? ' active' : '');
+            b.dataset.sub = sub;
             b.textContent = label;
             b.onclick = () => {
                 activeSub = sub;
                 document.querySelectorAll('.sub-btn').forEach(x => x.classList.remove('active'));
                 b.classList.add('active');
-                render();
+                renderDetail();
             };
             return b;
         }
 
-        /* ── lightbox ── */
+        /* ═══════════════════════════════════════
+           DETAIL RENDER (paginated, append-only)
+        ═══════════════════════════════════════ */
+        function renderDetail() {
+            detailImgs = ALL.filter(img =>
+                img.cat === activeCat &&
+                (activeSub === 'all' || img.sub === activeSub)
+            );
+            lbList     = detailImgs;
+            pageOffset = 0;
+
+            /* clear grid */
+            document.getElementById('grid').innerHTML  = '';
+            document.getElementById('noResults').style.display = detailImgs.length ? 'none' : '';
+
+            /* meta */
+            document.getElementById('metaCount').textContent = detailImgs.length;
+            document.getElementById('metaLabel').textContent =
+                _lang === 'cn' ? '张照片' : `photograph${detailImgs.length !== 1 ? 's' : ''}`;
+
+            loadPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function loadPage() {
+            const batch = detailImgs.slice(pageOffset, pageOffset + PAGE_SIZE);
+            const grid  = document.getElementById('grid');
+
+            batch.forEach((img, batchIdx) => {
+                const globalIdx = pageOffset + batchIdx;
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.onclick   = () => openLb(globalIdx);
+                card.innerHTML = `<img src="${img.src}" alt="${img.file}" loading="lazy"
+                    onerror="this.closest('.photo-card').style.display='none'">
+                    <div class="photo-overlay"><div class="photo-loc">${img.loc}</div></div>
+                    <div class="photo-wm"></div>`;
+                grid.appendChild(card);
+            });
+
+            pageOffset += batch.length;
+
+            /* update load-more button */
+            const wrap = document.getElementById('loadMoreWrap');
+            wrap.style.display = pageOffset < detailImgs.length ? '' : 'none';
+        }
+
+        /* ═══════════════════════════════════════
+           LIGHTBOX
+        ═══════════════════════════════════════ */
         function openLb(i) {
             lbIdx = i;
             showLb();
@@ -681,10 +1038,11 @@
             const img = lbList[lbIdx];
             document.getElementById('lbImg').src = img.src;
             document.getElementById('lbImg').alt = img.file;
-            document.getElementById('lbCat').textContent =
-                `${CAT_LABEL[img.cat] || img.cat} · ${img.loc}`;
-            document.getElementById('lbCount').textContent =
-                `${lbIdx + 1} / ${lbList.length}`;
+            const catName = _lang === 'cn'
+                ? (CAT_LABEL_CN[img.cat] || img.cat)
+                : (CAT_LABEL[img.cat] || img.cat);
+            document.getElementById('lbCat').textContent  = `${catName} · ${img.loc}`;
+            document.getElementById('lbCount').textContent = `${lbIdx + 1} / ${lbList.length}`;
         }
 
         document.addEventListener('keydown', e => {
@@ -694,8 +1052,25 @@
             if (e.key === 'Escape')     closeLb();
         });
 
-        /* init */
-        render();
+        /* ═══════════════════════════════════════
+           AUTO-ROTATING SLIDESHOWS (5s)
+        ═══════════════════════════════════════ */
+        function initSlideshows() {
+            document.querySelectorAll('.cat-module').forEach(mod => {
+                const slides = mod.querySelectorAll('.mod-slide');
+                if (slides.length < 2) return;
+                let idx = 0;
+                setInterval(() => {
+                    slides[idx].classList.remove('active');
+                    idx = (idx + 1) % slides.length;
+                    slides[idx].classList.add('active');
+                }, 5000);
+            });
+        }
+
+        /* ── init ── */
+        setLang(_lang);
+        initSlideshows();
     </script>
 </body>
 </html>
