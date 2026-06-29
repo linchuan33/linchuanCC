@@ -314,27 +314,54 @@
             color: var(--gold);
         }
 
-        .hero-id {
-            display: flex;
-            align-items: flex-end;
-            gap: 24px;
-            margin-bottom: 28px;
+        /* Big hero logo — right side of hero */
+        .hero-logo-wrap {
+            position: absolute;
+            right: 7%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            pointer-events: none;
         }
-        .hero-avatar {
-            width: 76px;
-            height: 76px;
+        .hero-logo-ring {
+            position: relative;
+            width: 370px;
+            height: 370px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: center center;
+        }
+        /* decorative outer rings */
+        .hero-logo-ring::before {
+            content: '';
+            position: absolute;
+            inset: -22px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,169,110,0.13);
+        }
+        .hero-logo-ring::after {
+            content: '';
+            position: absolute;
+            inset: -42px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,169,110,0.06);
+        }
+        .hero-logo-img {
+            width: 370px;
+            height: 370px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid rgba(201,169,110,0.35);
-            filter: brightness(0.88);
-            flex-shrink: 0;
-            margin-bottom: 12px;
-            transition: border-color 0.3s, box-shadow 0.3s, filter 0.3s;
+            border: 2px solid rgba(201,169,110,0.38);
+            filter: brightness(0.82) sepia(8%);
+            display: block;
+            pointer-events: auto;
+            transition: filter 0.4s, box-shadow 0.4s, border-color 0.4s;
         }
-        .hero-avatar:hover {
+        .hero-logo-img:hover {
+            filter: brightness(0.95) sepia(0%);
             border-color: var(--gold);
-            box-shadow: 0 0 0 6px rgba(201,169,110,0.13);
-            filter: brightness(1);
+            box-shadow: 0 0 60px rgba(201,169,110,0.18), 0 0 120px rgba(201,169,110,0.06);
         }
 
         .hero-desc {
@@ -990,6 +1017,9 @@
         /* ─────────────────────────────────────
            RESPONSIVE
         ───────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .hero-logo-wrap { display: none; }
+        }
         @media (max-width: 1024px) {
             .nav-links { display: none; }
             .nav-toggle { display: flex; }
@@ -1058,13 +1088,10 @@
         <div class="hero-content" id="heroContent">
             <div class="hero-eyebrow" data-i18n="h.eyebrow">Oakland University · CS · AI Track</div>
 
-            <div class="hero-id">
-                <img class="hero-avatar" src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
-                <h1 class="hero-name">
-                    Linchuan<br>
-                    <em>Chen</em>
-                </h1>
-            </div>
+            <h1 class="hero-name">
+                Linchuan<br>
+                <em>Chen</em>
+            </h1>
 
             <p class="hero-desc" data-i18n="h.desc">
                 A developer who believes code is a language that speaks
@@ -1078,6 +1105,13 @@
                     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
                 </a>
                 <a href="gallery.html" class="btn-ghost" data-i18n="h.btn2">Photo Gallery</a>
+            </div>
+        </div>
+
+        <!-- Big personal logo — right half of hero, shrinks on scroll -->
+        <div id="heroLogoWrap" class="hero-logo-wrap">
+            <div id="heroLogoScale" class="hero-logo-ring">
+                <img class="hero-logo-img" src="Linchuan-WaterMark.jpg" alt="Linchuan Chen">
             </div>
         </div>
 
@@ -1402,11 +1436,12 @@
         /* ── cursor ── */
         document.body.style.cursor = "url('badminton-MOUSE.png') 16 16, auto";
 
-        /* ── scroll: progress + nav + hero parallax ── */
-        const progressBar = document.getElementById('progress');
-        const nav         = document.getElementById('nav');
-        const heroContent = document.getElementById('heroContent');
-        const heroH       = window.innerHeight;
+        /* ── scroll: progress + nav + hero parallax + logo shrink ── */
+        const progressBar   = document.getElementById('progress');
+        const nav           = document.getElementById('nav');
+        const heroContent   = document.getElementById('heroContent');
+        const heroLogoScale = document.getElementById('heroLogoScale');
+        const heroH         = window.innerHeight;
 
         window.addEventListener('scroll', () => {
             const y     = window.scrollY;
@@ -1417,6 +1452,13 @@
                 const t = y / heroH;
                 heroContent.style.transform = `translateY(${y * 0.32}px)`;
                 heroContent.style.opacity   = `${Math.max(0, 1 - t * 1.7)}`;
+            }
+            if (heroLogoScale && y < heroH * 1.2) {
+                const progress = Math.min(y / heroH, 1);
+                const scale    = Math.max(0.04, 1 - progress * 0.96);
+                const fade     = Math.max(0, 1 - progress * 1.6);
+                heroLogoScale.style.transform = `scale(${scale})`;
+                heroLogoScale.style.opacity   = String(fade);
             }
         }, { passive: true });
 
