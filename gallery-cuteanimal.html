@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Animals · Linchuan Chen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b; --bg-2: #111113; --bg-3: #1a1a1c;
+            --text: #f0ede8; --text-2: #a09890; --text-3: #5a5550;
+            --gold: #c9a96e; --gold-l: #e5c88d;
+            --rule: rgba(255,255,255,0.07);
+            --ease: cubic-bezier(0.22,1,0.36,1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { cursor: url('badminton-MOUSE.png') 16 16, auto; min-height: 100vh; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ── progress bar ── */
+        #progress {
+            position: fixed; top: 0; left: 0; height: 2px;
+            background: linear-gradient(90deg, var(--gold-l), var(--gold));
+            width: 0; z-index: 2000; transition: width 0.1s linear;
+            pointer-events: none;
+        }
+
+        /* ── sticky nav ── */
+        #nav {
+            position: sticky; top: 0; z-index: 500;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 52px; height: 68px;
+            background: rgba(9,9,11,0.94); backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--rule);
+        }
+        .nav-back {
+            font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--text-2); transition: color 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-back:hover { color: var(--gold); }
+        .nav-title {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-style: italic; color: var(--text-2);
+            letter-spacing: 0.5px; pointer-events: none;
+        }
+        .lang-sw { display: flex; align-items: center; gap: 4px; }
+        .l-btn {
+            font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600;
+            color: var(--text-2); background: transparent;
+            border: 1px solid var(--text-3); padding: 6px 13px;
+            border-radius: 2px; cursor: pointer;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+            text-transform: uppercase; font-family: 'Inter', sans-serif;
+        }
+        .l-btn.active { color: var(--gold); border-color: var(--gold); background: rgba(201,169,110,0.08); }
+        .l-pipe { font-size: 0.55rem; color: var(--text-3); user-select: none; }
+
+        /* ── hero band ── */
+        .page-hero {
+            padding: 88px 56px 64px;
+            border-bottom: 1px solid var(--rule);
+            position: relative; overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 55% 90% at 85% 50%, rgba(201,169,110,0.055) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .page-hero-num {
+            position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(6rem, 14vw, 14rem);
+            font-weight: 900; color: rgba(201,169,110,0.04);
+            letter-spacing: -4px; line-height: 1; pointer-events: none;
+            user-select: none;
+        }
+        .page-seq {
+            font-size: 0.62rem; letter-spacing: 3.5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 22px;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 7rem);
+            font-weight: 900; line-height: 0.9; letter-spacing: -2.5px;
+            color: var(--text); margin-bottom: 30px;
+        }
+        .page-title em { font-style: italic; color: var(--gold); }
+        .page-meta {
+            font-size: 0.78rem; color: var(--text-3);
+            letter-spacing: 1.5px; display: flex; align-items: center; gap: 16px;
+        }
+        .page-meta-sep { color: var(--text-3); opacity: 0.4; }
+
+        /* ── filter bar ── */
+        .filter-bar {
+            padding: 0 52px; height: 54px;
+            display: flex; align-items: center; gap: 2px;
+            border-bottom: 1px solid var(--rule);
+            position: sticky; top: 68px; z-index: 400;
+            background: rgba(9,9,11,0.96); backdrop-filter: blur(14px);
+        }
+        .f-btn {
+            font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text-3); background: transparent; border: none;
+            padding: 8px 18px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-weight: 500;
+            transition: color 0.2s, background 0.2s; border-radius: 2px;
+        }
+        .f-btn:hover { color: var(--text-2); }
+        .f-btn.active { color: var(--gold); background: rgba(201,169,110,0.07); }
+        .f-count {
+            font-size: 0.58rem; color: var(--text-3); margin-left: 4px;
+            font-weight: 400; letter-spacing: 0;
+        }
+
+        /* ── photo grid ── */
+        .grid-wrap {
+            padding: 40px 52px 20px;
+            min-height: 60vh;
+        }
+        .photo-grid { columns: 4 200px; column-gap: 10px; }
+        .photo-card {
+            break-inside: avoid; margin-bottom: 10px;
+            position: relative; overflow: hidden; cursor: pointer;
+            background: var(--bg-3);
+        }
+        .photo-card img {
+            display: block; width: 100%; height: auto;
+            transition: transform 0.6s var(--ease), filter 0.4s;
+            filter: brightness(0.86);
+        }
+        .photo-card:hover img { transform: scale(1.05); filter: brightness(1); }
+        .photo-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 22px 12px 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.72));
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .photo-card:hover .photo-overlay { opacity: 1; }
+        .photo-loc {
+            font-size: 0.65rem; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text-2);
+        }
+        .photo-wm {
+            position: absolute; top: 8px; right: 8px;
+            font-size: 0.58rem; letter-spacing: 1.5px;
+            color: rgba(201,169,110,0.55); font-family: 'Playfair Display', serif;
+            font-style: italic; opacity: 0; transition: opacity 0.3s;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+        }
+        .photo-card:hover .photo-wm { opacity: 1; }
+
+        /* ── no results ── */
+        .no-results {
+            text-align: center; padding: 80px 0;
+            color: var(--text-3); font-size: 0.8rem; letter-spacing: 1px;
+        }
+
+        /* ── load more ── */
+        .load-more-wrap { text-align: center; padding: 20px 0 64px; }
+        .load-more-btn {
+            font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); background: transparent;
+            border: 1px solid rgba(201,169,110,0.32); padding: 14px 44px;
+            cursor: pointer; font-family: 'Inter', sans-serif;
+            transition: background 0.25s, border-color 0.25s;
+        }
+        .load-more-btn:hover { background: rgba(201,169,110,0.07); border-color: var(--gold); }
+
+        /* ── footer ── */
+        .page-footer {
+            border-top: 1px solid var(--rule);
+            padding: 28px 52px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: var(--text-3); font-size: 0.68rem; letter-spacing: 1px;
+        }
+        .footer-back { transition: color 0.2s; }
+        .footer-back:hover { color: var(--gold); }
+
+        /* ── lightbox ── */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 1000;
+            background: rgba(5,5,6,0.97);
+            display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .lightbox.open { display: flex; }
+        .lb-close {
+            position: absolute; top: 22px; right: 26px;
+            background: transparent; border: none; color: var(--text-2);
+            font-size: 1rem; cursor: pointer; width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; transition: color 0.2s, background 0.2s;
+        }
+        .lb-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+        .lb-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: transparent; border: none; color: var(--text-3);
+            font-size: 2.6rem; cursor: pointer; padding: 20px 16px;
+            transition: color 0.2s; user-select: none; z-index: 5;
+        }
+        .lb-nav:hover { color: var(--gold); }
+        .lb-prev { left: 4px; }
+        .lb-next { right: 4px; }
+        .lb-img-wrap {
+            max-width: min(88vw, 1120px);
+            max-height: 86vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lb-img-wrap img {
+            max-width: 100%; max-height: 86vh;
+            object-fit: contain; display: block;
+        }
+        .lb-info {
+            position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+            text-align: center; pointer-events: none;
+        }
+        .lb-loc { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); }
+        .lb-counter { font-size: 0.62rem; letter-spacing: 1px; color: var(--text-3); margin-top: 4px; }
+        .lb-wm {
+            position: absolute; bottom: 20px; right: 24px;
+            display: flex; align-items: center; gap: 8px; pointer-events: none;
+        }
+        .lb-wm-ring img {
+            width: 30px; height: 30px; border-radius: 50%;
+            object-fit: cover; border: 1px solid rgba(201,169,110,0.28);
+            filter: brightness(0.72);
+        }
+        .lb-wm-name {
+            font-size: 0.6rem; letter-spacing: 2px;
+            color: rgba(201,169,110,0.42);
+            font-family: 'Playfair Display', serif; font-style: italic;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 900px) {
+            #nav, .filter-bar, .page-hero, .grid-wrap, .page-footer { padding-left: 24px; padding-right: 24px; }
+            .nav-title { display: none; }
+            .photo-grid { columns: 2 140px; }
+        }
+        @media (max-width: 480px) {
+            .photo-grid { columns: 1; }
+            .page-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<header id="nav">
+    <a href="gallery.html" class="nav-back" data-i18n="nav.back">← Gallery</a>
+    <span class="nav-title">Cute Animals</span>
+    <div class="lang-sw">
+        <button class="l-btn" id="lEn" onclick="setLang('en')">EN</button>
+        <span class="l-pipe">|</span>
+        <button class="l-btn" id="lCn" onclick="setLang('cn')">中</button>
+    </div>
+</header>
+
+<!-- HERO -->
+<div class="page-hero">
+    <div class="page-hero-num">01</div>
+    <div class="page-seq">01 · Photography</div>
+    <h1 class="page-title">
+        <span data-i18n="h.t1">Cute</span><br>
+        <em data-i18n="h.t2">Animals</em>
+    </h1>
+    <div class="page-meta">
+        <span id="photoCountLabel" data-i18n="h.count">82 photographs</span>
+        <span class="page-meta-sep">·</span>
+        <span data-i18n="h.loc">Michigan &amp; Yunnan</span>
+    </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <button class="f-btn active" data-sub="all"          onclick="filterSub('all',this)"          data-i18n="f.all">All</button>
+    <button class="f-btn"        data-sub="US_MI"        onclick="filterSub('US_MI',this)"        data-i18n="f.mi">Michigan</button>
+    <button class="f-btn"        data-sub="YuanNan-云南" onclick="filterSub('YuanNan-云南',this)" data-i18n="f.yn">Yunnan</button>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrap">
+    <div class="photo-grid" id="grid"></div>
+    <div class="no-results" id="noResults" style="display:none" data-i18n="no.res">No photographs in this selection.</div>
+</div>
+<div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+    <button class="load-more-btn" onclick="loadPage()" data-i18n="btn.more">Load More</button>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+    <a href="gallery.html" class="footer-back" data-i18n="nav.back">← Gallery</a>
+    <span data-i18n="f.copy">© 2026 Linchuan Chen</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="lbBgClick(event)">
+    <button class="lb-close" onclick="closeLb()">✕</button>
+    <button class="lb-nav lb-prev" onclick="lbMove(-1)">&#8249;</button>
+    <button class="lb-nav lb-next" onclick="lbMove(1)">&#8250;</button>
+    <div class="lb-img-wrap" id="lbImgWrap"></div>
+    <div class="lb-info">
+        <div class="lb-loc" id="lbLoc"></div>
+        <div class="lb-counter" id="lbCounter"></div>
+    </div>
+    <div class="lb-wm">
+        <div class="lb-wm-ring"><img src="Linchuan-WaterMark.jpg" alt="Linchuan Chen" loading="lazy"></div>
+        <span class="lb-wm-name">Linchuan Chen</span>
+    </div>
+</div>
+
+<script>
+    /* ── i18n ── */
+    const TRANS = {
+        en: {
+            'nav.back':  '← Gallery',
+            'h.t1':      'Cute', 'h.t2': 'Animals',
+            'h.count':   '82 photographs',
+            'h.loc':     'Michigan & Yunnan',
+            'f.all':     'All',
+            'f.mi':      'Michigan',
+            'f.yn':      'Yunnan',
+            'btn.more':  'Load More',
+            'no.res':    'No photographs in this selection.',
+            'f.copy':    '© 2026 Linchuan Chen'
+        },
+        cn: {
+            'nav.back':  '← 相册',
+            'h.t1':      '可爱', 'h.t2': '动物',
+            'h.count':   '82 张照片',
+            'h.loc':     '密歇根 & 云南',
+            'f.all':     '全部',
+            'f.mi':      '密歇根',
+            'f.yn':      '云南',
+            'btn.more':  '加载更多',
+            'no.res':    '该分类暂无照片。',
+            'f.copy':    '© 2026 陈林川'
+        }
+    };
+    const SUB_LOC = {
+        'US_MI':        { en: 'Michigan, USA', cn: '美国密歇根' },
+        'YuanNan-云南': { en: 'Yunnan, China', cn: '中国云南' }
+    };
+
+    let _lang = localStorage.getItem('site-lang') || 'en';
+
+    function setLang(lang) {
+        _lang = lang;
+        localStorage.setItem('site-lang', lang);
+        document.documentElement.lang = lang === 'cn' ? 'zh' : 'en';
+        document.getElementById('lEn').classList.toggle('active', lang === 'en');
+        document.getElementById('lCn').classList.toggle('active', lang === 'cn');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const k = el.dataset.i18n;
+            if (TRANS[lang][k] !== undefined) el.textContent = TRANS[lang][k];
+        });
+        document.title = lang === 'cn' ? '可爱动物 · 陈林川' : 'Cute Animals · Linchuan Chen';
+    }
+
+    /* ── data ── */
+    const DATA = [
+        { sub:'US_MI', files:[
+            'Bird.JPG','Bird2.JPG','Bird3.JPG','Bird4.JPG','Bird5.JPG','Bird6.JPG','Bird7.JPG','Bird8.JPG','Bird9.JPG',
+            'Bird10.JPG','Bird11.JPG','Bird12.JPG','Bird13.JPG','Bird14.JPG','Bird15.JPG','Bird16.JPG','Bird17.JPG','Bird18.JPG','Bird19.JPG',
+            'Bird20.JPG','Bird21.JPG','Bird22.JPG','Bird23.JPG','Bird24.JPG','Bird25.JPG','Bird26.JPG','Bird27.JPG','Bird28.JPG','Bird29.JPG',
+            'Bird30.JPG','Bird31.JPG','Bird32.JPG','Bird33.JPG','Bird34.JPG','Bird35.JPG','Bird36.JPG','Bird37.JPG','Bird38.JPG','Bird39.JPG',
+            'Bird40.JPG','Bird41.JPG','Bird42.JPG','Bird43.JPG','Bird44.JPG','Bird45.JPG',
+            'DSC_0385.jpg','Deer.JPG','Deer2.JPG','Deer3.JPG','Deer4.JPG','Deer5.JPG','Deer6.JPG','Deer7.JPG','Deer8.JPG','Deer9.JPG',
+            'Duck.JPG','Duck2.JPG','Eagle1.JPG','Eagle2.JPG','Eagle3.JPG','Eagle4.JPG','Eagle5.JPG',
+            'IMG_5448.JPG','Sep-6-3.jpg','Sep-6-4.jpg',
+            'Squirrel.JPG','Squirrel2.JPG','Squirrel3.JPG','Squirrel4.JPG',
+            'Swan.JPG','Swan2.JPG','Swan3.JPG','_DSC2213.JPG'
+        ]},
+        { sub:'YuanNan-云南', files:[
+            'yunnan-98.jpg','yunnan-99.jpg','yunnan-100.jpg','yunnan-101.jpg','yunnan-102.jpg',
+            'yunnan-103.jpg','yunnan-104.jpg','yunnan-105.jpg','yunnan-106.jpg'
+        ]}
+    ];
+
+    const ALL = [];
+    DATA.forEach(g => g.files.forEach(f => ALL.push({
+        sub: g.sub,
+        src: `CuteAnimal/${g.sub}/${f}`,
+        file: f
+    })));
+
+    /* ── state ── */
+    let activeSub   = 'all';
+    let filteredImgs = [];
+    let pageOffset  = 0;
+    const PAGE_SIZE = 24;
+    let lbIdx = 0;
+    let lbList = [];
+
+    /* ── filter ── */
+    function filterSub(sub, btnEl) {
+        activeSub = sub;
+        document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+        renderGrid();
+    }
+
+    /* ── grid ── */
+    function renderGrid() {
+        filteredImgs = activeSub === 'all' ? ALL.slice() : ALL.filter(i => i.sub === activeSub);
+        pageOffset   = 0;
+        document.getElementById('grid').innerHTML = '';
+        document.getElementById('noResults').style.display = filteredImgs.length === 0 ? '' : 'none';
+        lbList = filteredImgs;
+        loadPage();
+    }
+
+    function loadPage() {
+        const batch = filteredImgs.slice(pageOffset, pageOffset + PAGE_SIZE);
+        const grid  = document.getElementById('grid');
+        batch.forEach((img, i) => {
+            const idx  = pageOffset + i;
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            card.onclick   = () => openLb(idx);
+            const loc = (SUB_LOC[img.sub] || {})[_lang] || img.sub;
+            card.innerHTML = `<img src="${img.src}" alt="${img.file}" loading="${pageOffset === 0 && i < 8 ? 'eager' : 'lazy'}"
+                onerror="this.closest('.photo-card').style.display='none'">
+                <div class="photo-overlay"><div class="photo-loc">${loc}</div></div>
+                <div class="photo-wm">Linchuan Chen</div>`;
+            grid.appendChild(card);
+        });
+        pageOffset += batch.length;
+        document.getElementById('loadMoreWrap').style.display = pageOffset < filteredImgs.length ? '' : 'none';
+    }
+
+    /* ── lightbox ── */
+    function openLb(idx) {
+        lbIdx = idx;
+        showLbImg();
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function showLbImg() {
+        const img = lbList[lbIdx];
+        document.getElementById('lbImgWrap').innerHTML = `<img src="${img.src}" alt="${img.file}">`;
+        document.getElementById('lbLoc').textContent     = (SUB_LOC[img.sub] || {})[_lang] || img.sub;
+        document.getElementById('lbCounter').textContent = `${lbIdx + 1} / ${lbList.length}`;
+    }
+    function lbMove(dir) {
+        lbIdx = (lbIdx + dir + lbList.length) % lbList.length;
+        showLbImg();
+    }
+    function closeLb() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function lbBgClick(e) {
+        if (e.target === document.getElementById('lightbox')) closeLb();
+    }
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('lightbox').classList.contains('open')) return;
+        if (e.key === 'ArrowRight') lbMove(1);
+        if (e.key === 'ArrowLeft')  lbMove(-1);
+        if (e.key === 'Escape')     closeLb();
+    });
+
+    /* ── scroll progress ── */
+    const progressBar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+        const y     = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        if (total > 0) progressBar.style.width = `${(y / total) * 100}%`;
+    }, { passive: true });
+
+    /* ── init ── */
+    setLang(_lang);
+    renderGrid();
+</script>
+</body>
+</html>

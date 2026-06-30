@@ -271,7 +271,7 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1.4s ease-in-out;
+            transition: opacity 0.55s ease-in-out;
             transform: scale(1);
         }
         .mod-slide.active {
@@ -728,7 +728,7 @@
         <div class="modules-grid">
 
             <!-- CuteAnimal Module -->
-            <div class="cat-module" onclick="filterCat('CuteAnimal')">
+            <div class="cat-module" onclick="window.location.href='gallery-cuteanimal.html'">
                 <div class="mod-slides">
                     <img class="mod-slide active" src="CuteAnimal-preView/Bird36.JPG"    alt="" loading="eager" onerror="this.style.display='none'">
                     <img class="mod-slide"        src="CuteAnimal-preView/Bird40.JPG"    alt="" loading="lazy"  onerror="this.style.display='none'">
@@ -747,7 +747,7 @@
             </div>
 
             <!-- Landscape Module -->
-            <div class="cat-module" onclick="filterCat('Landscape')">
+            <div class="cat-module" onclick="window.location.href='gallery-landscape.html'">
                 <div class="mod-slides">
                     <img class="mod-slide active" src="Landscape-preView/Doge4-5.jpg"    alt="" loading="eager" onerror="this.style.display='none'">
                     <img class="mod-slide"        src="Landscape-preView/yunnan-13.jpg"  alt="" loading="lazy"  onerror="this.style.display='none'">
@@ -765,7 +765,7 @@
             </div>
 
             <!-- Portrait Module -->
-            <div class="cat-module" onclick="filterCat('Portrait')">
+            <div class="cat-module" onclick="window.location.href='gallery-portrait.html'">
                 <div class="mod-slides">
                     <img class="mod-slide active" src="Portrait-preView/IMG_0358.JPG"                       alt="" loading="eager" onerror="this.style.display='none'">
                     <img class="mod-slide"        src="Portrait-preView/tangchao-9.jpg"                     alt="" loading="lazy"  onerror="this.style.display='none'">
@@ -1088,7 +1088,7 @@
         });
 
         /* ═══════════════════════════════════════
-           AUTO-ROTATING SLIDESHOWS (5s)
+           AUTO-ROTATING SLIDESHOWS (1s)
         ═══════════════════════════════════════ */
         function initSlideshows() {
             document.querySelectorAll('.cat-module').forEach(mod => {
@@ -1099,7 +1099,7 @@
                     slides[idx].classList.remove('active');
                     idx = (idx + 1) % slides.length;
                     slides[idx].classList.add('active');
-                }, 5000);
+                }, 1000);
             });
         }
 
