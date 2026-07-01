@@ -250,9 +250,9 @@
         <em data-i18n="h.t2">scape</em>
     </h1>
     <div class="page-meta">
-        <span data-i18n="h.count">48 photographs</span>
+        <span data-i18n="h.count">69 photographs</span>
         <span class="page-meta-sep">·</span>
-        <span data-i18n="h.loc">Michigan, Heyuan &amp; Yunnan</span>
+        <span data-i18n="h.loc">Michigan, Heyuan, Yunnan, Chongqing &amp; NYC</span>
     </div>
 </div>
 
@@ -261,6 +261,8 @@
     <button class="f-btn"        data-sub="US_MI"        onclick="filterSub('US_MI',this)"        data-i18n="f.mi">Michigan</button>
     <button class="f-btn"        data-sub="HeYuan-河源"  onclick="filterSub('HeYuan-河源',this)"  data-i18n="f.hy">Heyuan</button>
     <button class="f-btn"        data-sub="YuanNan-云南" onclick="filterSub('YuanNan-云南',this)" data-i18n="f.yn">Yunnan</button>
+    <button class="f-btn"        data-sub="ChongQing-重庆" onclick="filterSub('ChongQing-重庆',this)" data-i18n="f.cq">Chongqing</button>
+    <button class="f-btn"        data-sub="NYC-纽约"     onclick="filterSub('NYC-纽约',this)"     data-i18n="f.nyc">NYC</button>
 </div>
 
 <div class="grid-wrap">
@@ -296,9 +298,9 @@
         en: {
             'nav.back': '← Gallery',
             'h.t1': 'Land', 'h.t2': 'scape',
-            'h.count': '48 photographs',
-            'h.loc': 'Michigan, Heyuan & Yunnan',
-            'f.all': 'All', 'f.mi': 'Michigan', 'f.hy': 'Heyuan', 'f.yn': 'Yunnan',
+            'h.count': '69 photographs',
+            'h.loc': 'Michigan, Heyuan, Yunnan, Chongqing & NYC',
+            'f.all': 'All', 'f.mi': 'Michigan', 'f.hy': 'Heyuan', 'f.yn': 'Yunnan', 'f.cq': 'Chongqing', 'f.nyc': 'NYC',
             'btn.more': 'Load More',
             'no.res': 'No photographs in this selection.',
             'f.copy': '© 2026 Linchuan Chen'
@@ -306,18 +308,20 @@
         cn: {
             'nav.back': '← 相册',
             'h.t1': '风景', 'h.t2': '摄影',
-            'h.count': '48 张照片',
-            'h.loc': '密歇根、河源 & 云南',
-            'f.all': '全部', 'f.mi': '密歇根', 'f.hy': '河源', 'f.yn': '云南',
+            'h.count': '69 张照片',
+            'h.loc': '密歇根、河源、云南、重庆 & 纽约',
+            'f.all': '全部', 'f.mi': '密歇根', 'f.hy': '河源', 'f.yn': '云南', 'f.cq': '重庆', 'f.nyc': '纽约',
             'btn.more': '加载更多',
             'no.res': '该分类暂无照片。',
             'f.copy': '© 2026 陈林川'
         }
     };
     const SUB_LOC = {
-        'US_MI':        { en: 'Michigan, USA',  cn: '美国密歇根' },
-        'HeYuan-河源':  { en: 'Heyuan, China',  cn: '中国河源' },
-        'YuanNan-云南': { en: 'Yunnan, China',  cn: '中国云南' }
+        'US_MI':          { en: 'Michigan, USA',   cn: '美国密歇根' },
+        'HeYuan-河源':    { en: 'Heyuan, China',   cn: '中国河源' },
+        'YuanNan-云南':   { en: 'Yunnan, China',   cn: '中国云南' },
+        'ChongQing-重庆': { en: 'Chongqing, China', cn: '中国重庆' },
+        'NYC-纽约':       { en: 'New York, USA',   cn: '美国纽约' }
     };
 
     let _lang = localStorage.getItem('site-lang') || 'en';
@@ -345,13 +349,27 @@
             'Doge4-20.jpg','Doge4-21.jpg','Doge4-22.jpg','Doge4-23.jpg','Doge4-24.jpg',
             'Doge4-25.jpg','Doge4-29.jpg',
             'IMG_5416.JPG','IMG_5451.JPG','IMG_6559.JPG','IMG_9281.JPG',
-            'Sep-6-7.jpg','Sep-6-8.jpg'
+            'Sep-6-7.jpg','Sep-6-8.jpg',
+            '001b10d5993e7d32b595a023653a3918.jpg','370374e65156e0373d8b56875d2ed6a1.jpg',
+            '3f15d7634c2ab0215954f73330c04977.jpg','3ff48cfe6c6cc9f12ef119c282812aa4.jpg',
+            '422708e720a7f3d781bac363c082132e.jpg','8b9150d1a0f3899a4ed232daaea9eddc.jpg',
+            '98bc8bbc9aded3b62b062d3239ab0b2e.jpg','a5bdbbe0075d8c011ec5cb1877e91aa0.jpg',
+            'd11fed2f676eb0906e4e3c327ab18f66.jpg','e55e99470f61dfba9fa94cb25ce3d4c5.jpg',
+            'f1cb8ad668eb2beec404785a5f442b6d.jpg','f6fcf0d69c66273e9b9ceecb79a7f19d.jpg',
+            'yueliang-com.bmp'
         ]},
         { sub:'YuanNan-云南', files:[
             'yunnan-12.jpg','yunnan-13.jpg','yunnan-65.jpg','yunnan-68.jpg','yunnan-69.jpg',
             'yunnan-70.jpg','yunnan-71.jpg','yunnan-72.jpg','yunnan-78.jpg','yunnan-79.jpg',
-            'yunnan-80.jpg','yunnan-88.jpg','yunnan-89.jpg'
-        ]}
+            'yunnan-80.jpg','yunnan-88.jpg','yunnan-89.jpg',
+            '0be99acf1e6e817fb7863a9ef72a15bf.jpg','26d8ed25985c6cc52c2a8c05bf135be1.jpg',
+            'dd5c32c6c21e41757e19ab3a243c6c00.jpg'
+        ]},
+        { sub:'ChongQing-重庆', files:[
+            '6015f8c897ad29e198c64dcb39c26416.jpg','75685f2bedb7af8f6d301af8e3d2510f.jpg',
+            '81a0c7b13b97a1129b93d0ca8f60c281.jpg','c99aa7ce494f731aeb08cddfe93724e9.jpg'
+        ]},
+        { sub:'NYC-纽约', files:['f28025f04df4c4a563a4113692e6ad2f.jpg'] }
     ];
 
     const ALL = [];

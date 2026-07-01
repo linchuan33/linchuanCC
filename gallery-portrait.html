@@ -249,9 +249,9 @@
         <em data-i18n="h.t2">trait</em>
     </h1>
     <div class="page-meta">
-        <span data-i18n="h.count">25 photographs</span>
+        <span data-i18n="h.count">39 photographs</span>
         <span class="page-meta-sep">·</span>
-        <span data-i18n="h.loc">Heyuan &amp; Michigan</span>
+        <span data-i18n="h.loc">Heyuan, Michigan, Shenzhen &amp; NYC</span>
     </div>
 </div>
 
@@ -259,6 +259,8 @@
     <button class="f-btn active" data-sub="all"         onclick="filterSub('all',this)"         data-i18n="f.all">All</button>
     <button class="f-btn"        data-sub="HeYuan-河源" onclick="filterSub('HeYuan-河源',this)" data-i18n="f.hy">Heyuan</button>
     <button class="f-btn"        data-sub="US_MI"       onclick="filterSub('US_MI',this)"       data-i18n="f.mi">Michigan</button>
+    <button class="f-btn"        data-sub="ShenZhen-深圳" onclick="filterSub('ShenZhen-深圳',this)" data-i18n="f.sz">Shenzhen</button>
+    <button class="f-btn"        data-sub="NYC-纽约"     onclick="filterSub('NYC-纽约',this)"     data-i18n="f.nyc">NYC</button>
 </div>
 
 <div class="grid-wrap">
@@ -294,9 +296,9 @@
         en: {
             'nav.back': '← Gallery',
             'h.t1': 'Por', 'h.t2': 'trait',
-            'h.count': '25 photographs',
-            'h.loc': 'Heyuan & Michigan',
-            'f.all': 'All', 'f.hy': 'Heyuan', 'f.mi': 'Michigan',
+            'h.count': '39 photographs',
+            'h.loc': 'Heyuan, Michigan, Shenzhen & NYC',
+            'f.all': 'All', 'f.hy': 'Heyuan', 'f.mi': 'Michigan', 'f.sz': 'Shenzhen', 'f.nyc': 'NYC',
             'btn.more': 'Load More',
             'no.res': 'No photographs in this selection.',
             'f.copy': '© 2026 Linchuan Chen'
@@ -304,17 +306,19 @@
         cn: {
             'nav.back': '← 相册',
             'h.t1': '人像', 'h.t2': '摄影',
-            'h.count': '25 张照片',
-            'h.loc': '河源 & 密歇根',
-            'f.all': '全部', 'f.hy': '河源', 'f.mi': '密歇根',
+            'h.count': '39 张照片',
+            'h.loc': '河源、密歇根、深圳 & 纽约',
+            'f.all': '全部', 'f.hy': '河源', 'f.mi': '密歇根', 'f.sz': '深圳', 'f.nyc': '纽约',
             'btn.more': '加载更多',
             'no.res': '该分类暂无照片。',
             'f.copy': '© 2026 陈林川'
         }
     };
     const SUB_LOC = {
-        'HeYuan-河源': { en: 'Heyuan, China',  cn: '中国河源' },
-        'US_MI':       { en: 'Michigan, USA',   cn: '美国密歇根' }
+        'HeYuan-河源':    { en: 'Heyuan, China',   cn: '中国河源' },
+        'US_MI':          { en: 'Michigan, USA',   cn: '美国密歇根' },
+        'ShenZhen-深圳':  { en: 'Shenzhen, China', cn: '中国深圳' },
+        'NYC-纽约':       { en: 'New York, USA',   cn: '美国纽约' }
     };
 
     let _lang = localStorage.getItem('site-lang') || 'en';
@@ -346,14 +350,28 @@
             '875a1d8f5528a180a23ede4e2e5311fb.JPG',
             '883b17d4d68b1574082baf045d897cd5.JPG',
             '8b5767289c91451eb7043e1d1d37416c.JPG',
-            'IMG_0355.JPG','IMG_0356.JPG','IMG_0357.JPG','IMG_0358.JPG',
-            'IMG_0359.JPG','IMG_0360.JPG','IMG_0361.JPG',
+            'IMG_0355.JPG','IMG_0356.JPG','IMG_0360.JPG','IMG_0361.JPG',
             'a6b679bd6f34b99c6371c0ba697c7032.JPG',
             'aa1a629c237ee97ac3bc2e655418f556.JPG',
             'd35cdd8446169ba6ab892b57fa9b4838.JPG',
-            'tangchao-9.jpg'
+            'tangchao-9.jpg',
+            '195403a46e8aacbd518944fdce0a94f4.jpg','IMG_0362.jpg','IMG_0363.jpg',
+            'd2e3b1b4cbe3ad7ae2b22306b28f49f1.jpg','daf59bde2eb8052cfaba50de548fb900.jpg'
         ]},
-        { sub:'US_MI', files:['IMG_5564.JPG','_DSC0568.JPG'] }
+        { sub:'US_MI', files:[
+            'IMG_5564.JPG','_DSC0568.JPG',
+            '169ef65d7e79255c10883f8ade0ccae3.jpg','53539f48ea5e54527be8c58d0efe6aff.jpg',
+            '6d652be17fd7cee6f4845ef903d5c3aa.jpg','8e67a8e08a70347dfbd738a20e99b91d.jpg',
+            '9738744574675a17e533836359c33ca9.jpg'
+        ]},
+        { sub:'ShenZhen-深圳', files:[
+            '194aba95db59e465327186c5b728c905.jpg','21203d66db7f358da1fde82832739da2.jpg',
+            '8c1d90a156d6427e446e33b3fe17a8cc.jpg','b640263e4de82cff4552eaa59bbc6d5b.jpg',
+            'd7dd2b7b6488b232fe387f99c20080b3.jpg'
+        ]},
+        { sub:'NYC-纽约', files:[
+            '8db278a84b4d3c66517accadba8863ee.jpg','b9dcdfb0de53a5f105c9ec46bc0dba58.jpg'
+        ]}
     ];
 
     const ALL = [];
